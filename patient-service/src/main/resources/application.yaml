@@ -1,0 +1,28 @@
+spring:
+  application:
+   name: patient-service
+#
+#  datasource:
+#    url: jdbc:h2:mem:mydatabase
+#    username: admin_vw
+#    password: password
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    database-platform: org.hibernate.dialect.H2Dialect
+#
+#  sql:
+#    init:
+#      mode: always
+#  h2:
+#    console:
+#      path: /h2-console
+#
+
+server:
+  port: 1010
+
+logging:
+  level:
+    root: info

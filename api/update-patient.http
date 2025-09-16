@@ -1,0 +1,16 @@
+###
+PUT localhost:1010/api/7f89b453-ce96-42a3-ae64-d17d62b83b71
+Content-Type: application/json
+
+{
+  "firstName": "Oleg",
+  "lastName": "B",
+  "gender": "MALE",
+  "weight": 120.4,
+  "email": "dark-knight@example.com",
+  "phoneNumber": "+1111111111",
+  "dateOfBirth": "1992-03-09",
+  "address": "Belgorod"
+}
+
+###
