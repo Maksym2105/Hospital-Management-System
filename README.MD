@@ -25,7 +25,7 @@ docker run --name patient-db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=your
 Configure Application
 spring.datasource.url=jdbc:postgresql://localhost:5432/db3
 spring.datasource.username=postgres
-spring.datasource.password=10105656
+spring.datasource.password=your password 
 spring.jpa.hibernate.ddl-auto=update
 spring.sql.init.mode=always
 Run Application
