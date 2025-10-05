@@ -21,11 +21,11 @@
 
 ### Run with Docker (PostgreSQL)
 ```bash
-docker run --name patient-db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=10105656 -e POSTGRES_DB=db3 -p 5432:5432 -d postgres:12
+docker run --name patient-db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=your password here -e POSTGRES_DB=db3 -p 5432:5432 -d postgres:12
 Configure Application
 spring.datasource.url=jdbc:postgresql://localhost:5432/db3
 spring.datasource.username=postgres
-spring.datasource.password=10105656
+spring.datasource.password=your password 
 spring.jpa.hibernate.ddl-auto=update
 spring.sql.init.mode=always
 Run Application
