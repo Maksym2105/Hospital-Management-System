@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -55,7 +55,7 @@ public class PatientService {
     public PatientResponseDTO updatePatient(UUID id, PatientRequestDTO request){
         Patient patient = patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException(PatientMessages.PATIENT_NOT_FOUND.getMessage()));
 
-        if(patientRepository.existsByEmailAndIdNot(patient.getEmail(), patient.getId())) {
+        if(patientRepository.existsByEmailAndPatientIdNot(patient.getEmail(), patient.getPatientId())) {
             throw new EmailAlreadyExistsException(PatientMessages.EMAIL_ALREADY_EXISTS.getMessage());
         }
 

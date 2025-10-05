@@ -6,6 +6,7 @@ import org.com.patientservice.dto.PatientResponseDTO;
 import org.com.patientservice.exception.EmptyComponentException;
 import org.com.patientservice.model.genders.Gender;
 import org.com.patientservice.service.PatientService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -32,48 +33,53 @@ public class PatientControllerTest {
     MockMvc mockMvc;
 
     @Autowired
-    ObjectMapper objectMapper = new ObjectMapper();
+    ObjectMapper objectMapper;
 
     @MockitoBean
     PatientService patientService;
 
     @Test
-    void getPatientByIdShouldReturn_200_Status() throws Exception {
+    @DisplayName("/GET, /api/{id} - should return patient by id ")
+    void getPatientByIdShouldReturnPatient () throws Exception {
 
-        String patientId = "5fb21d96-9006-41d3-8c9e-819f151a9a0a";
+        UUID patientId = UUID.randomUUID();
 
-        PatientResponseDTO patientDTO = PatientResponseDTO.builder()
-                .id(patientId)
+        PatientResponseDTO response = PatientResponseDTO.builder()
+                .id(patientId.toString())
                 .firstName("John")
                 .lastName("Doe")
                 .gender(Gender.MALE.toString())
                 .weight("80 kg")
                 .height("1.80 m")
                 .email("johnexample@test.com")
-                .phoneNumber("+380687645342")
+                .phoneNumber("+38 (068) 7645342")
                 .dateOfBirth("2001-01-01")
                 .address("Test Address")
                 .build();
 
 
-        when(patientService.getPatientById(UUID.fromString(patientId))).thenReturn(patientDTO);
+        when(patientService.getPatientById(patientId)).thenReturn(response);
 
-        mockMvc.perform(get("/api/{id}", patientId))
+        mockMvc.perform(get("/api/{id}", patientId.toString()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(patientId))
-                .andExpect(jsonPath("$.firstName").value("John"))
-                .andExpect(jsonPath("$.lastName").value("Doe"))
-                .andExpect(jsonPath("$.gender").value(Gender.MALE.toString()))
-                .andExpect(jsonPath("$.weight").value("80 kg"))
-                .andExpect(jsonPath("$.height").value("1.80 m"))
-                .andExpect(jsonPath("$.email").value("johnexample@test.com"))
-                .andExpect(jsonPath("$.phoneNumber").value("+380687645342"))
-                .andExpect(jsonPath("$.dateOfBirth").value("2001-01-01"))
-                .andExpect(jsonPath("$.address").value("Test Address"));
+                .andExpect(jsonPath("$.id").value(response.getId()))
+                .andExpect(jsonPath("$.firstName").value(response.getFirstName()))
+                .andExpect(jsonPath("$.lastName").value(response.getLastName()))
+                .andExpect(jsonPath("$.gender").value(response.getGender()))
+                .andExpect(jsonPath("$.weight").value(response.getWeight()))
+                .andExpect(jsonPath("$.height").value(response.getHeight()))
+                .andExpect(jsonPath("$.email").value(response.getEmail()))
+                .andExpect(jsonPath("$.phoneNumber").value(response.getPhoneNumber()))
+                .andExpect(jsonPath("$.dateOfBirth").value(response.getDateOfBirth()))
+                .andExpect(jsonPath("$.address").value(response.getAddress()));
+
+        verify(patientService).getPatientById(UUID.fromString(patientId.toString()));
+        verifyNoMoreInteractions(patientService);
     }
 
     @Test
-    void getPatientByIdShouldReturn_404_Status() throws Exception {
+    @DisplayName("/GET, /api/{id} - should throw exception when no patient")
+    void getPatientByIdShouldReturnNotFoundIfNoPatient() throws Exception {
         UUID patientId = UUID.randomUUID();
 
         when(patientService.getPatientById(patientId)).thenThrow(new EmptyComponentException("Patient not found"));
@@ -84,13 +90,11 @@ public class PatientControllerTest {
     }
 
     @Test
-    void getPatientsShouldReturn_200_status() throws Exception {
+    @DisplayName("/GET, /api/patients - should return list of patients")
+    void getPatientsShouldReturnListOfPatients () throws Exception {
 
-        String firstPatientId = "313268dc-7fe3-40ed-9d39-08cf53d26fb6";
-        String secondPatientId = "e4371eac-80a6-4918-9628-0b6227e4dd28";
-
-        PatientResponseDTO patientDTOFirstTest = PatientResponseDTO.builder()
-                .id(firstPatientId)
+        PatientResponseDTO firstResponse = PatientResponseDTO.builder()
+                .id(UUID.randomUUID().toString())
                 .firstName("John")
                 .lastName("Doe")
                 .gender(Gender.MALE.toString())
@@ -102,33 +106,54 @@ public class PatientControllerTest {
                 .address("Test Address")
                 .build();
 
-        PatientResponseDTO patientDTOSecondTest = PatientResponseDTO.builder()
-                .id(secondPatientId)
+        PatientResponseDTO secondResponse = PatientResponseDTO.builder()
+                .id(UUID.randomUUID().toString())
                 .firstName("Donald")
                 .lastName("Smith")
                 .gender(Gender.MALE.toString())
                 .weight("90 kg")
                 .height("1.90 m")
                 .email("donaldsmith@test.com")
-                .phoneNumber("+380687645333")
+                .phoneNumber("+380 (687) 645333")
                 .dateOfBirth("2000-01-01")
                 .address("Test Address")
                 .build();
 
-        List<PatientResponseDTO> patientDTOList = List.of(patientDTOFirstTest, patientDTOSecondTest);
+        List<PatientResponseDTO> patientDTOList = List.of(firstResponse, secondResponse);
 
         when(patientService.getPatients()).thenReturn(patientDTOList);
 
         mockMvc.perform(get("/api/patients"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].firstName").value("John"))
-                .andExpect(jsonPath("$[0].lastName").value("Doe"));
+                .andExpect(jsonPath("$[0].firstName").value(firstResponse.getFirstName()))
+                .andExpect(jsonPath("$[0].lastName").value(firstResponse.getLastName()))
+                .andExpect(jsonPath("$[0].gender").value(firstResponse.getGender()))
+                .andExpect(jsonPath("$[0].weight").value(firstResponse.getWeight()))
+                .andExpect(jsonPath("$[0].height").value(firstResponse.getHeight()))
+                .andExpect(jsonPath("$[0].email").value(firstResponse.getEmail()))
+                .andExpect(jsonPath("$[0].phoneNumber").value(firstResponse.getPhoneNumber()))
+                .andExpect(jsonPath("$[0].dateOfBirth").value(firstResponse.getDateOfBirth()))
+                .andExpect(jsonPath("$[0].address").value(firstResponse.getAddress()))
+
+                .andExpect(jsonPath("$[1].firstName").value(secondResponse.getFirstName()))
+                .andExpect(jsonPath("$[1].lastName").value(secondResponse.getLastName()))
+                .andExpect(jsonPath("$[1].gender").value(secondResponse.getGender()))
+                .andExpect(jsonPath("$[1].weight").value(secondResponse.getWeight()))
+                .andExpect(jsonPath("$[1].height").value(secondResponse.getHeight()))
+                .andExpect(jsonPath("$[1].email").value(secondResponse.getEmail()))
+                .andExpect(jsonPath("$[1].phoneNumber").value(secondResponse.getPhoneNumber()))
+                .andExpect(jsonPath("$[1].dateOfBirth").value(secondResponse.getDateOfBirth()))
+                .andExpect(jsonPath("$[1].address").value(secondResponse.getAddress()));
+
+        verify(patientService).getPatients();
+        verifyNoMoreInteractions(patientService);
     }
 
     @Test
-    void savePatientShouldReturn_200_status() throws Exception {
-        PatientRequestDTO patientRequestDTO = PatientRequestDTO.builder()
+    @DisplayName("/POST, /api - should save patient and return response")
+    void savePatientShouldReturnPatentResponse () throws Exception {
+        PatientRequestDTO request = PatientRequestDTO.builder()
                 .firstName("John")
                 .lastName("Doe")
                 .gender(Gender.MALE)
@@ -146,37 +171,41 @@ public class PatientControllerTest {
         PatientResponseDTO response = PatientResponseDTO.builder()
 
                 .id(patientId.toString())
-                .firstName(patientRequestDTO.getFirstName())
-                .lastName(patientRequestDTO.getLastName())
-                .gender(Gender.MALE.toString())
-                .weight(patientRequestDTO.getWeight().toString())
-                .height(patientRequestDTO.getHeight().toString())
-                .email(patientRequestDTO.getEmail())
-                .phoneNumber(patientRequestDTO.getPhoneNumber())
-                .dateOfBirth(patientRequestDTO.getDateOfBirth().toString())
-                .address(patientRequestDTO.getAddress())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .gender(request.getGender().toString())
+                .weight(request.getWeight().toString())
+                .height(request.getHeight().toString())
+                .email(request.getEmail())
+                .phoneNumber(request.getPhoneNumber())
+                .dateOfBirth(request.getDateOfBirth().toString())
+                .address(request.getAddress())
                 .build();
 
-        when(patientService.createPatient(patientRequestDTO)).thenReturn(response);
+        when(patientService.createPatient(request)).thenReturn(response);
 
         mockMvc.perform(post("/api")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(patientRequestDTO)))
+                .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.firstName").value("John"))
-                .andExpect(jsonPath("$.lastName").value("Doe"))
-                .andExpect(jsonPath("$.gender").value(Gender.MALE.toString()))
-                .andExpect(jsonPath("$.weight").value(80.3))
-                .andExpect(jsonPath("$.height").value(180.5))
-                .andExpect(jsonPath("$.email").value("testmail@test.com"))
-                .andExpect(jsonPath("$.phoneNumber").value("+1 803432344"))
-                .andExpect(jsonPath("$.dateOfBirth").value("2000-10-03"))
-                .andExpect(jsonPath("$.address").value("Test Address"));
+                .andExpect(jsonPath("$.firstName").value(request.getFirstName()))
+                .andExpect(jsonPath("$.lastName").value(response.getLastName()))
+                .andExpect(jsonPath("$.gender").value(request.getGender().toString()))
+                .andExpect(jsonPath("$.weight").value(response.getWeight()))
+                .andExpect(jsonPath("$.height").value(response.getHeight()))
+                .andExpect(jsonPath("$.email").value(response.getEmail()))
+                .andExpect(jsonPath("$.phoneNumber").value(response.getPhoneNumber()))
+                .andExpect(jsonPath("$.dateOfBirth").value(response.getDateOfBirth()))
+                .andExpect(jsonPath("$.address").value(response.getAddress()));
+
+        verify(patientService).createPatient(request);
+        verifyNoMoreInteractions(patientService);
     }
 
     @Test
-    void savePatientShouldReturn_400_Status() throws Exception {
+    @DisplayName("/POST, /api - should throw bad request if value is null")
+    void savePatientShouldReturnBadRequestWhenValueIsNull () throws Exception {
         PatientRequestDTO request = PatientRequestDTO.builder()
                 .firstName("John")
                 .lastName("Doe")
@@ -198,7 +227,8 @@ public class PatientControllerTest {
     }
 
     @Test
-    void updatePatientShouldReturn_200_status() throws Exception {
+    @DisplayName("/PUT, /api/{id} - should update patient and return response")
+    void updatePatientShouldUpdateAndReturnResponse () throws Exception {
         UUID patientId = UUID.randomUUID();
 
         PatientRequestDTO request = PatientRequestDTO.builder()
@@ -214,11 +244,11 @@ public class PatientControllerTest {
                 .registeredDate(LocalDate.parse("2023-03-01"))
                 .build();
 
-        PatientResponseDTO responseDTO = PatientResponseDTO.builder()
+        PatientResponseDTO response = PatientResponseDTO.builder()
                 .id(patientId.toString())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
-                .gender(Gender.MALE.toString())
+                .gender(request.getGender().toString())
                 .weight(request.getWeight().toString())
                 .height(request.getHeight().toString())
                 .email(request.getEmail())
@@ -227,18 +257,29 @@ public class PatientControllerTest {
                 .address(request.getAddress())
                 .build();
 
-        when(patientService.updatePatient(patientId, request)).thenReturn(responseDTO);
+        when(patientService.updatePatient(patientId, request)).thenReturn(response);
 
         mockMvc.perform(put("/api/{id}", patientId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.firstName").value("John"))
-                .andExpect(jsonPath("$.lastName").value("Doe"));
+                .andExpect(jsonPath("$.firstName").value(response.getFirstName()))
+                .andExpect(jsonPath("$.lastName").value(response.getLastName()))
+                .andExpect(jsonPath("$.gender").value(response.getGender()))
+                .andExpect(jsonPath("$.weight").value(response.getWeight()))
+                .andExpect(jsonPath("$.height").value(response.getHeight()))
+                .andExpect(jsonPath("$.email").value(response.getEmail()))
+                .andExpect(jsonPath("$.phoneNumber").value(response.getPhoneNumber()))
+                .andExpect(jsonPath("$.dateOfBirth").value(response.getDateOfBirth()))
+                .andExpect(jsonPath("$.address").value(response.getAddress()));
+
+        verify(patientService).updatePatient(patientId, request);
+        verifyNoMoreInteractions(patientService);
     }
 
     @Test
-    void updatePatientShouldReturn_400_Status() throws Exception {
+    @DisplayName("/PUT, /api/{id} - should return bad request if value is null")
+    void updatePatientShouldReturnBadRequestIfValueIsNull () throws Exception {
         UUID patientId = UUID.randomUUID();
 
         PatientRequestDTO request = PatientRequestDTO.builder()
@@ -261,12 +302,16 @@ public class PatientControllerTest {
     }
 
     @Test
-    void deletePatientShouldReturn_200_status() throws Exception {
+    @DisplayName("/DELETE, /api/{id} should delete patient by id")
+    void deletePatientShouldReturnNoContent () throws Exception {
         UUID patientId = UUID.randomUUID();
 
         doNothing().when(patientService).deletePatient(patientId);
 
         mockMvc.perform(delete("/api/{id}", patientId))
                 .andExpect(status().isNoContent());
+
+        verify(patientService).deletePatient(patientId);
+        verifyNoMoreInteractions(patientService);
     }
 }

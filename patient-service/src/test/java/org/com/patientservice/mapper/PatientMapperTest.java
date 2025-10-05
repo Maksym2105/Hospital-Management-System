@@ -21,30 +21,30 @@ public class PatientMapperTest {
     @Test
     void toDTOShouldMapPatientToDTO() {
         Patient patient = Patient.builder()
-                .id(UUID.fromString("bcfe825a-700b-488e-8955-50bd5887b9c3"))
+                .patientId(UUID.fromString("bcfe825a-700b-488e-8955-50bd5887b9c3"))
                 .firstName("John")
                 .lastName("Doe")
                 .gender(Gender.MALE)
                 .weight(80.3)
                 .height(180.5)
                 .email("johndoe@exapmle.com")
-                .phoneNumber("1234567890")
+                .phoneNumber("+1 (234) 567890")
                 .dateOfBirth(LocalDate.parse("2001-03-09"))
                 .address("Test Address")
                 .registeredDate(LocalDate.now())
                 .build();
 
-        PatientResponseDTO toDTO = PatientMapper.toDTO(patient);
+        PatientResponseDTO response = PatientMapper.toDTO(patient);
 
-        assertThat(toDTO.getId()).isEqualTo("bcfe825a-700b-488e-8955-50bd5887b9c3");
-        assertThat(toDTO.getFirstName()).isEqualTo("John");
-        assertThat(toDTO.getLastName()).isEqualTo("Doe");
-        assertThat(toDTO.getWeight()).isEqualTo("80.3");
-        assertThat(toDTO.getHeight()).isEqualTo("180.5");
-        assertThat(toDTO.getEmail()).isEqualTo("johndoe@exapmle.com");
-        assertThat(toDTO.getPhoneNumber()).isEqualTo("1234567890");
-        assertThat(toDTO.getDateOfBirth()).isEqualTo("2001-03-09");
-        assertThat(toDTO.getAddress()).isEqualTo("Test Address");
+        assertThat(response.getId()).isEqualTo(patient.getPatientId().toString());
+        assertThat(response.getFirstName()).isEqualTo(patient.getFirstName());
+        assertThat(response.getLastName()).isEqualTo(patient.getLastName());
+        assertThat(response.getWeight()).isEqualTo(patient.getWeight().toString());
+        assertThat(response.getHeight()).isEqualTo(patient.getHeight().toString());
+        assertThat(response.getEmail()).isEqualTo(patient.getEmail());
+        assertThat(response.getPhoneNumber()).isEqualTo(patient.getPhoneNumber());
+        assertThat(response.getDateOfBirth()).isEqualTo(patient.getDateOfBirth().toString());
+        assertThat(response.getAddress()).isEqualTo(patient.getAddress());
     }
 
     @Test
@@ -57,14 +57,14 @@ public class PatientMapperTest {
     @Test
     void validateShouldThrowExceptionWhenPatientIsEmpty(){
         Patient patient = Patient.builder()
-                .id(UUID.randomUUID())
+                .patientId(UUID.randomUUID())
                 .firstName("")
                 .lastName("Doe")
                 .gender(Gender.MALE)
                 .weight(80.3)
                 .height(180.5)
                 .email("johndoe@exapmle.com")
-                .phoneNumber("1234567890")
+                .phoneNumber("+1 (234) 567890")
                 .dateOfBirth(LocalDate.parse("2001-03-09"))
                 .address("Test Address")
                 .registeredDate(LocalDate.now())
@@ -76,30 +76,30 @@ public class PatientMapperTest {
 
     @Test
     void toModelShouldMapPatientRequestToModel() {
-        PatientRequestDTO patientRequestDTO = PatientRequestDTO.builder()
+        PatientRequestDTO request = PatientRequestDTO.builder()
                 .firstName("Rocky")
                 .lastName("Balboa")
                 .gender(Gender.MALE)
                 .weight(80.3)
                 .height(180.5)
                 .email("testmail@test.com")
-                .phoneNumber("1111111111")
+                .phoneNumber("+ (111) 1111111")
                 .dateOfBirth(LocalDate.parse("1978-03-01"))
                 .address("Test Street 34")
                 .registeredDate(LocalDate.parse("2023-01-01"))
                 .build();
 
-        Patient patient = patientMapper.toModel(patientRequestDTO);
+        Patient patient = patientMapper.toModel(request);
 
-        assertThat(patient.getFirstName()).isEqualTo("Rocky");
-        assertThat(patient.getLastName()).isEqualTo("Balboa");
-        assertThat(patient.getWeight()).isEqualTo(80.3);
-        assertThat(patient.getHeight()).isEqualTo(180.5);
-        assertThat(patient.getEmail()).isEqualTo("testmail@test.com");
-        assertThat(patient.getPhoneNumber()).isEqualTo("1111111111");
-        assertThat(patient.getDateOfBirth()).isEqualTo("1978-03-01");
-        assertThat(patient.getAddress()).isEqualTo("Test Street 34");
-        assertThat(patient.getRegisteredDate()).isEqualTo("2023-01-01");
+        assertThat(patient.getFirstName()).isEqualTo(request.getFirstName());
+        assertThat(patient.getLastName()).isEqualTo(request.getLastName());
+        assertThat(patient.getWeight()).isEqualTo(request.getWeight());
+        assertThat(patient.getHeight()).isEqualTo(request.getHeight());
+        assertThat(patient.getEmail()).isEqualTo(request.getEmail());
+        assertThat(patient.getPhoneNumber()).isEqualTo(request.getPhoneNumber());
+        assertThat(patient.getDateOfBirth()).isEqualTo(request.getDateOfBirth());
+        assertThat(patient.getAddress()).isEqualTo(request.getAddress());
+        assertThat(patient.getRegisteredDate()).isEqualTo(request.getRegisteredDate());
     }
 
     @Test
@@ -111,7 +111,7 @@ public class PatientMapperTest {
 
     @Test
     void toModelShouldThrowExceptionWhenPatientIsEmpty() {
-        PatientRequestDTO patientRequestDTO = PatientRequestDTO.builder()
+        PatientRequestDTO request = PatientRequestDTO.builder()
                 .firstName("")
                 .lastName("Balboa")
                 .gender(Gender.MALE)
@@ -124,6 +124,6 @@ public class PatientMapperTest {
                 .registeredDate(LocalDate.parse("2023-01-01"))
                 .build();
 
-        Assertions.assertThrows(EmptyEntityException.class, ()  -> PatientMapper.toModel(patientRequestDTO));
+        Assertions.assertThrows(EmptyEntityException.class, ()  -> PatientMapper.toModel(request));
     }
 }

@@ -1,0 +1,16 @@
+### POST request to example server
+POST localhost:1011/doc
+Content-Type: application/json
+
+{
+  "firstName": "Allan",
+  "lastName": "Tombrock",
+  "gender": "MALE",
+  "email": "allanbjf@example.com",
+  "phoneNumber": "+ 1 (440) 332 4410",
+  "specialization": "Cardiologist",
+  "rating": 0.0,
+  "schedule": "From Monday to Friday, From 9:00 AM to 18:00 PM"
+}
+
+###

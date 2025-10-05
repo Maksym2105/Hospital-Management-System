@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS patient
 (
-    id UUID PRIMARY KEY,
+    patient_id UUID PRIMARY KEY,
     first_name varchar(128) NOT NULL,
     last_name varchar(128) NOT NULL,
     gender varchar(16) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS patient
     registered_date DATE NOT NULL
 );
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
 SELECT 'f43d3b0c-fa24-43ba-be2f-543ef1036dbf',
        'Carl',
        'Johnson',
@@ -25,9 +25,9 @@ SELECT 'f43d3b0c-fa24-43ba-be2f-543ef1036dbf',
        '1966-08-11',
        'Grove Street 65',
        '2024-07-23'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = 'f43d3b0c-fa24-43ba-be2f-543ef1036dbf');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = 'f43d3b0c-fa24-43ba-be2f-543ef1036dbf');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height,  email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height,  email, phone_number, date_of_birth, address, registered_date)
 SELECT '9c94c586-496b-4c2e-b3f5-b1db78d1c186',
        'Donald',
        'Trump',
@@ -39,9 +39,9 @@ SELECT '9c94c586-496b-4c2e-b3f5-b1db78d1c186',
        '1946-06-14',
        'Washington DC',
        '2024-09-23'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = '9c94c586-496b-4c2e-b3f5-b1db78d1c186');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = '9c94c586-496b-4c2e-b3f5-b1db78d1c186');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height,  email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height,  email, phone_number, date_of_birth, address, registered_date)
 SELECT '7f89b453-ce96-42a3-ae64-d17d62b83b71',
        'Bruce',
        'Wayne',
@@ -53,9 +53,9 @@ SELECT '7f89b453-ce96-42a3-ae64-d17d62b83b71',
        '1960-03-19',
        'Gotham',
        '2009-11-23'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = '7f89b453-ce96-42a3-ae64-d17d62b83b71');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = '7f89b453-ce96-42a3-ae64-d17d62b83b71');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
 SELECT '0de8b041-7834-4685-90c9-d1fa1221a232',
        'Walter',
        'White',
@@ -67,9 +67,9 @@ SELECT '0de8b041-7834-4685-90c9-d1fa1221a232',
        '1958-09-11',
        'Albuquerque, 3828 Piermont Dr',
        '2010-03-29'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = '0de8b041-7834-4685-90c9-d1fa1221a232');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = '0de8b041-7834-4685-90c9-d1fa1221a232');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
 SELECT '344d8ace-f1c0-43fc-9348-a3c72e3c1627',
        'Darren',
        'Watkins',
@@ -81,9 +81,9 @@ SELECT '344d8ace-f1c0-43fc-9348-a3c72e3c1627',
        '2005-01-21',
        'Montana, 3499 Labor Dr',
        '2019-04-30'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = '344d8ace-f1c0-43fc-9348-a3c72e3c1627');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = '344d8ace-f1c0-43fc-9348-a3c72e3c1627');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
 SELECT 'cccb7d02-6c47-415d-aa79-57c9775b7abc',
        'Gabrielle',
        'Torres',
@@ -95,9 +95,9 @@ SELECT 'cccb7d02-6c47-415d-aa79-57c9775b7abc',
        '1990-04-02',
        'Texas, 1903 Del-Toro Dr',
        '2019-05-03'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = 'cccb7d02-6c47-415d-aa79-57c9775b7abc');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = 'cccb7d02-6c47-415d-aa79-57c9775b7abc');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
 SELECT 'd4e4f2b7-7963-4ecf-8b50-9137b945bdaa',
        'Case',
        'Dylan',
@@ -109,9 +109,9 @@ SELECT 'd4e4f2b7-7963-4ecf-8b50-9137b945bdaa',
        '1998-05-09',
        'Ostin, 1231 Baker Dr',
        '2023-04-27'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = 'd4e4f2b7-7963-4ecf-8b50-9137b945bdaa');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = 'd4e4f2b7-7963-4ecf-8b50-9137b945bdaa');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
 SELECT '44d11c3f-7486-44d1-8d1a-116f1b98ea01',
        'Linus',
        'Torvalds',
@@ -123,9 +123,9 @@ SELECT '44d11c3f-7486-44d1-8d1a-116f1b98ea01',
        '1969-12-28',
        'Oregon, 0223 Nimble Dr',
        '1993-02-23'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = '44d11c3f-7486-44d1-8d1a-116f1b98ea01');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = '44d11c3f-7486-44d1-8d1a-116f1b98ea01');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
 SELECT '9d8db8fd-1ccd-450f-ab1d-34c8e2178c5a',
        'Van',
        'DarkHolm',
@@ -137,9 +137,9 @@ SELECT '9d8db8fd-1ccd-450f-ab1d-34c8e2178c5a',
        '1972-10-24',
        'New Jersey, 1478 Pitch Dr',
        '2007-07-18'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = '9d8db8fd-1ccd-450f-ab1d-34c8e2178c5a');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = '9d8db8fd-1ccd-450f-ab1d-34c8e2178c5a');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
 SELECT '2014b6c6-be98-4c64-b83d-4d4c8736b957',
        'Zack',
        'Rawr',
@@ -151,9 +151,9 @@ SELECT '2014b6c6-be98-4c64-b83d-4d4c8736b957',
        '1990-04-20',
        'Texas, 983 Saint Gregory Dr',
        '2005-03-18'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = '2014b6c6-be98-4c64-b83d-4d4c8736b957');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = '2014b6c6-be98-4c64-b83d-4d4c8736b957');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
 SELECT 'bcfe825a-700b-488e-8955-50bd5887b9c3',
        'Nicholas',
        'Stewart',
@@ -165,9 +165,9 @@ SELECT 'bcfe825a-700b-488e-8955-50bd5887b9c3',
        '2001-09-26',
        'California, 92 Fobos Dr',
        '2024-10-12'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = 'bcfe825a-700b-488e-8955-50bd5887b9c3');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = 'bcfe825a-700b-488e-8955-50bd5887b9c3');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
 SELECT '084b400a-0832-4b7a-8016-bbbcc515baeb',
        'Gem',
        'Jewels',
@@ -179,9 +179,9 @@ SELECT '084b400a-0832-4b7a-8016-bbbcc515baeb',
        '1998-03-23',
        'California, 8843 El-Mios Dr',
        '2025-11-02'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = '084b400a-0832-4b7a-8016-bbbcc515baeb');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = '084b400a-0832-4b7a-8016-bbbcc515baeb');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
 SELECT '19307b9f-165c-4c6c-a983-e9834c08aacf',
        'Trevor',
        'Philips',
@@ -193,9 +193,9 @@ SELECT '19307b9f-165c-4c6c-a983-e9834c08aacf',
        '1967-11-14',
        'North Dakota, 8384 Rubio Dr',
        '2012-06-04'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = '19307b9f-165c-4c6c-a983-e9834c08aacf');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = '19307b9f-165c-4c6c-a983-e9834c08aacf');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
 SELECT '78e03965-f588-4f83-977f-347a7c81fdfe',
        'Nolan',
        'Grayson',
@@ -207,9 +207,9 @@ SELECT '78e03965-f588-4f83-977f-347a7c81fdfe',
        '1923-12-14',
        'Viltrum',
        '2022-07-25'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = '78e03965-f588-4f83-977f-347a7c81fdfe');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = '78e03965-f588-4f83-977f-347a7c81fdfe');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
 SELECT '1a7430ef-4510-49fb-b1fb-d1d3d65b774b',
        'Jesse',
        'Pinkman',
@@ -221,9 +221,9 @@ SELECT '1a7430ef-4510-49fb-b1fb-d1d3d65b774b',
        '1987-09-14',
        'Albuquerque, 322 16th St SW',
        '2008-02-13'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = '1a7430ef-4510-49fb-b1fb-d1d3d65b774b');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = '1a7430ef-4510-49fb-b1fb-d1d3d65b774b');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
 SELECT '46286cae-717a-448b-a3f1-aa5ac2f29eba',
        'Emma',
        'Frost',
@@ -235,9 +235,9 @@ SELECT '46286cae-717a-448b-a3f1-aa5ac2f29eba',
        '1972-07-14',
        'New York, 24 90th St SW',
        '2003-02-26'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = '46286cae-717a-448b-a3f1-aa5ac2f29eba');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = '46286cae-717a-448b-a3f1-aa5ac2f29eba');
 
-INSERT INTO patient (id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
+INSERT INTO patient (patient_id, first_name, last_name, gender, weight, height, email, phone_number, date_of_birth, address, registered_date)
 SELECT '09000e05-6a37-4b69-b516-381621575e4a',
        'Vitaly',
        'Tsal',
@@ -249,7 +249,7 @@ SELECT '09000e05-6a37-4b69-b516-381621575e4a',
        '1990-10-19',
        'Dubai, 321 74th St',
        '2008-08-30'
-WHERE NOT EXISTS (SELECT 1 FROM patient WHERE id = '09000e05-6a37-4b69-b516-381621575e4a');
+WHERE NOT EXISTS (SELECT 1 FROM patient WHERE patient_id = '09000e05-6a37-4b69-b516-381621575e4a');
 
 
 

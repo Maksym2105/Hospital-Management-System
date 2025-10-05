@@ -20,7 +20,7 @@ public class PatientMapper {
         }
 
         PatientResponseDTO patientResponseDTO = PatientResponseDTO.builder()
-                .id(patient.getId().toString())
+                .id(patient.getPatientId().toString())
                 .firstName(patient.getFirstName())
                 .lastName(patient.getLastName())
                 .gender(patient.getGender().toString())

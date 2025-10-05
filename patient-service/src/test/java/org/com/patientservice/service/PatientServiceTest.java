@@ -35,54 +35,77 @@ public class PatientServiceTest {
     PatientService patientService;
 
     @Test
-    public void getPatientShouldReturnListOfPatient() {
-        UUID patientId = UUID.randomUUID();
+    public void getPatientShouldReturnListOfPatients() {
 
-        Patient patient = Patient.builder()
-                .id(patientId)
+        Patient firstPatient = Patient.builder()
+                .patientId(UUID.randomUUID())
                 .firstName("Emily")
                 .lastName("Chomenko")
                 .gender(Gender.MALE)
                 .weight(80.3)
                 .height(180.5)
                 .email("testmail@test.com")
-                .phoneNumber("+1 380 223 98 83")
+                .phoneNumber("+1 (380) 223 98 83")
                 .dateOfBirth(LocalDate.parse("2004-09-01"))
                 .address("Test Street 23/3")
                 .registeredDate(LocalDate.now())
                 .build();
 
-        Patient patient2 = Patient.builder()
-                .id(patientId)
+        Patient secondPatient = Patient.builder()
+                .patientId(UUID.randomUUID())
                 .firstName("David")
                 .lastName("Chomenko")
                 .gender(Gender.MALE)
                 .weight(80.3)
                 .height(180.5)
                 .email("testmail@test.com")
-                .phoneNumber("+1 380 223 98 83")
+                .phoneNumber("+1 (380) 223 98 83")
                 .dateOfBirth(LocalDate.parse("2009-09-03"))
                 .address("Test Block 23/3")
                 .registeredDate(LocalDate.now())
                 .build();
 
-        when(patientRepository.findAll()).thenReturn(List.of(patient, patient2));
+        when(patientRepository.findAll()).thenReturn(List.of(firstPatient, secondPatient));
 
-        List<PatientResponseDTO> patientResponseDTO = patientService.getPatients();
+        List<PatientResponseDTO> response = patientService.getPatients();
 
-        assertThat(patientResponseDTO.size()).isEqualTo(2);
-        assertThat(patientResponseDTO.get(0).getId()).isEqualTo(patient.getId().toString());
-        assertThat(patientResponseDTO.get(1).getId()).isEqualTo(patient2.getId().toString());
+        assertThat(response.size()).isEqualTo(2);
+        assertThat(response.get(0).getId()).isEqualTo(firstPatient.getPatientId().toString());
+        assertThat(response.get(0).getFirstName()).isEqualTo(firstPatient.getFirstName());
+        assertThat(response.get(0).getLastName()).isEqualTo(firstPatient.getLastName());
+        assertThat(response.get(0).getGender()).isEqualTo(firstPatient.getGender().toString());
+        assertThat(response.get(0).getWeight()).isEqualTo(firstPatient.getWeight().toString());
+        assertThat(response.get(0).getHeight()).isEqualTo(firstPatient.getHeight().toString());
+        assertThat(response.get(0).getEmail()).isEqualTo(firstPatient.getEmail());
+        assertThat(response.get(0).getPhoneNumber()).isEqualTo(firstPatient.getPhoneNumber());
+        assertThat(response.get(0).getDateOfBirth()).isEqualTo(firstPatient.getDateOfBirth().toString());
+        assertThat(response.get(0).getAddress()).isEqualTo(firstPatient.getAddress());
 
+        assertThat(response.get(1).getId()).isEqualTo(secondPatient.getPatientId().toString());
+        assertThat(response.get(1).getFirstName()).isEqualTo(secondPatient.getFirstName());
+        assertThat(response.get(1).getLastName()).isEqualTo(secondPatient.getLastName());
+        assertThat(response.get(1).getGender()).isEqualTo(secondPatient.getGender().toString());
+        assertThat(response.get(1).getWeight()).isEqualTo(secondPatient.getWeight().toString());
+        assertThat(response.get(1).getHeight()).isEqualTo(secondPatient.getHeight().toString());
+        assertThat(response.get(1).getEmail()).isEqualTo(secondPatient.getEmail());
+        assertThat(response.get(1).getPhoneNumber()).isEqualTo(secondPatient.getPhoneNumber());
+        assertThat(response.get(1).getDateOfBirth()).isEqualTo(secondPatient.getDateOfBirth().toString());
+        assertThat(response.get(1).getAddress()).isEqualTo(secondPatient.getAddress());
+
+        verify(patientRepository).findAll();
+        verifyNoMoreInteractions(patientRepository);
     }
 
     @Test
     void getPatientShouldReturnEmptyListWhenNoPatientFound() {
         when(patientRepository.findAll()).thenReturn(List.of());
 
-        List<PatientResponseDTO> patientResponseDTO = patientService.getPatients();
+        List<PatientResponseDTO> responseList = patientService.getPatients();
 
-        assertThat(patientResponseDTO.size()).isEqualTo(0);
+        assertThat(responseList.size()).isEqualTo(0);
+
+        verify(patientRepository).findAll();
+        verifyNoMoreInteractions(patientRepository);
     }
 
     @Test
@@ -90,14 +113,14 @@ public class PatientServiceTest {
         UUID patientId = UUID.randomUUID();
 
         Patient patient = Patient.builder()
-                .id(patientId)
+                .patientId(patientId)
                 .firstName("David")
                 .lastName("Chomenko")
                 .gender(Gender.MALE)
                 .weight(80.3)
                 .height(180.5)
                 .email("testmail@test.com")
-                .phoneNumber("+1 380 223 98 83")
+                .phoneNumber("+1 (380) 223 98 83")
                 .dateOfBirth(LocalDate.parse("2009-09-03"))
                 .address("Test Block 23/3")
                 .registeredDate(LocalDate.parse("2020-01-01"))
@@ -105,11 +128,21 @@ public class PatientServiceTest {
 
         when(patientRepository.findById(patientId)).thenReturn(Optional.of(patient));
 
-        PatientResponseDTO patientResponseDTO = patientService.getPatientById(patientId);
+        PatientResponseDTO response = patientService.getPatientById(patientId);
 
-        assertThat(patientResponseDTO.getFirstName()).isEqualTo(patient.getFirstName());
-        assertThat(patientResponseDTO.getLastName()).isEqualTo(patient.getLastName());
-        assertThat(patientResponseDTO.getEmail()).isEqualTo(patient.getEmail());
+        assertThat(response.getFirstName()).isEqualTo(patient.getFirstName());
+        assertThat(response.getLastName()).isEqualTo(patient.getLastName());
+        assertThat(response.getEmail()).isEqualTo(patient.getEmail());
+        assertThat(response.getGender()).isEqualTo(patient.getGender().toString());
+        assertThat(response.getWeight()).isEqualTo(patient.getWeight().toString());
+        assertThat(response.getHeight()).isEqualTo(patient.getHeight().toString());
+        assertThat(response.getEmail()).isEqualTo(patient.getEmail());
+        assertThat(response.getPhoneNumber()).isEqualTo(patient.getPhoneNumber());
+        assertThat(response.getDateOfBirth()).isEqualTo(patient.getDateOfBirth().toString());
+        assertThat(response.getAddress()).isEqualTo(patient.getAddress());
+
+        verify(patientRepository).findById(patientId);
+        verifyNoMoreInteractions(patientRepository);
     }
 
     @Test
@@ -119,67 +152,83 @@ public class PatientServiceTest {
         when(patientRepository.findById(patientId)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> patientService.getPatientById(patientId)).isInstanceOf(NoSuchElementException.class);
+
+        verify(patientRepository).findById(patientId);
+        verifyNoMoreInteractions(patientRepository);
     }
 
     @Test
     void createPatientShouldReturnPatient() {
 
-        PatientRequestDTO patientRequestDTO = PatientRequestDTO.builder()
+        PatientRequestDTO request = PatientRequestDTO.builder()
                 .firstName("David")
                 .lastName("Chomenko")
                 .gender(Gender.MALE)
                 .weight(80.3)
                 .height(180.5)
                 .email("testmail@test.com")
-                .phoneNumber("+1 380 223 98 83")
+                .phoneNumber("+1 (380) 223 98 83")
                 .dateOfBirth(LocalDate.parse("2009-09-03"))
                 .address("Test Block 23/3")
                 .registeredDate(LocalDate.parse("2009-09-03"))
                 .build();
 
-        UUID patientId = UUID.randomUUID();
 
         Patient patient = Patient.builder()
-                .id(patientId)
-                .firstName(patientRequestDTO.getFirstName())
-                .lastName(patientRequestDTO.getLastName())
-                .gender(Gender.MALE)
-                .weight(patientRequestDTO.getWeight())
-                .height(patientRequestDTO.getHeight())
-                .email(patientRequestDTO.getEmail())
-                .phoneNumber(patientRequestDTO.getPhoneNumber())
-                .dateOfBirth(patientRequestDTO.getDateOfBirth())
-                .address(patientRequestDTO.getAddress())
-                .registeredDate(patientRequestDTO.getRegisteredDate())
+                .patientId(UUID.randomUUID())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .gender(request.getGender())
+                .weight(request.getWeight())
+                .height(request.getHeight())
+                .email(request.getEmail())
+                .phoneNumber(request.getPhoneNumber())
+                .dateOfBirth(request.getDateOfBirth())
+                .address(request.getAddress())
+                .registeredDate(request.getRegisteredDate())
                 .build();
 
-        when(patientRepository.existsByEmail(patientRequestDTO.getEmail())).thenReturn(false);
+        when(patientRepository.existsByEmail(request.getEmail())).thenReturn(false);
         when(patientRepository.save(Mockito.any(Patient.class))).thenReturn(patient);
 
-        PatientResponseDTO response = patientService.createPatient(patientRequestDTO);
+        PatientResponseDTO response = patientService.createPatient(request);
 
         assertThat(response.getFirstName()).isEqualTo(patient.getFirstName());
         assertThat(response.getLastName()).isEqualTo(patient.getLastName());
+        assertThat(response.getGender()).isEqualTo(patient.getGender().toString());
+        assertThat(response.getWeight()).isEqualTo(patient.getWeight().toString());
+        assertThat(response.getHeight()).isEqualTo(patient.getHeight().toString());
+        assertThat(response.getEmail()).isEqualTo(patient.getEmail());
+        assertThat(response.getPhoneNumber()).isEqualTo(patient.getPhoneNumber());
+        assertThat(response.getDateOfBirth()).isEqualTo(patient.getDateOfBirth().toString());
+        assertThat(response.getAddress()).isEqualTo(patient.getAddress());
+
+        verify(patientRepository).existsByEmail(request.getEmail());
+        verify(patientRepository).save(Mockito.any(Patient.class));
+        verifyNoMoreInteractions(patientRepository);
     }
 
     @Test
     void createPatientShouldThrowEmptyEntityExceptionWhenPatientExistsWithEmail() {
-        PatientRequestDTO patientRequestDTO = PatientRequestDTO.builder()
+        PatientRequestDTO request = PatientRequestDTO.builder()
                 .firstName("David")
                 .lastName("Chomenko")
                 .gender(Gender.MALE)
                 .weight(80.5)
                 .height(180.5)
                 .email("testmail@test.com")
-                .phoneNumber("+1 380 223 98 83")
+                .phoneNumber("+1 (380) 223 98 83")
                 .dateOfBirth(LocalDate.parse("2009-09-03"))
                 .address("Test Block 23/3")
                 .registeredDate(LocalDate.parse("2009-09-03"))
                 .build();
 
-        when(patientRepository.existsByEmail(patientRequestDTO.getEmail())).thenReturn(true);
+        when(patientRepository.existsByEmail(request.getEmail())).thenReturn(true);
 
-        assertThrows(EmailAlreadyExistsException.class, () -> patientService.createPatient(patientRequestDTO));
+        assertThrows(EmailAlreadyExistsException.class, () -> patientService.createPatient(request));
+
+        verify(patientRepository).existsByEmail(request.getEmail());
+        verifyNoMoreInteractions(patientRepository);
     }
 
     @Test
@@ -195,19 +244,19 @@ public class PatientServiceTest {
                 .weight(80.5)
                 .height(185.5)
                 .email("testmail@test.com")
-                .phoneNumber("+1 380 223 98 83")
+                .phoneNumber("+1 (380) 223 98 83")
                 .dateOfBirth(LocalDate.parse("2009-09-03"))
                 .address("Test Block 23/3")
                 .registeredDate(LocalDate.parse("2009-09-03"))
                 .build();
 
-        when(patientRepository.existsByEmailAndIdNot(request.getEmail(), patientId)).thenReturn(true);
+        when(patientRepository.existsByEmailAndPatientIdNot(request.getEmail(), patientId)).thenReturn(true);
 
         Patient patient = Patient.builder()
-                .id(patientId)
+                .patientId(patientId)
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
-                .gender(Gender.MALE)
+                .gender(request.getGender())
                 .weight(request.getWeight())
                 .height(request.getHeight())
                 .email(request.getEmail())
@@ -219,10 +268,20 @@ public class PatientServiceTest {
 
         when(patientRepository.save(Mockito.any(Patient.class))).thenReturn(patient);
 
-        PatientResponseDTO patientResponseDTO = patientService.updatePatient(patientId, request);
+        PatientResponseDTO response = patientService.updatePatient(patientId, request);
 
-        assertThat(patientResponseDTO.getFirstName()).isEqualTo(patient.getFirstName());
-        assertThat(patientResponseDTO.getLastName()).isEqualTo(patient.getLastName());
+        assertThat(response.getFirstName()).isEqualTo(patient.getFirstName());
+        assertThat(response.getLastName()).isEqualTo(patient.getLastName());
+        assertThat(response.getGender()).isEqualTo(patient.getGender().toString());
+        assertThat(response.getWeight()).isEqualTo(patient.getWeight().toString());
+        assertThat(response.getHeight()).isEqualTo(patient.getHeight().toString());
+        assertThat(response.getEmail()).isEqualTo(patient.getEmail());
+        assertThat(response.getPhoneNumber()).isEqualTo(patient.getPhoneNumber());
+        assertThat(response.getDateOfBirth()).isEqualTo(patient.getDateOfBirth().toString());
+        assertThat(response.getAddress()).isEqualTo(patient.getAddress());
+
+        verify(patientRepository).findById(patientId);
+        verify(patientRepository).save(Mockito.any(Patient.class));
 
     }
 
@@ -231,6 +290,9 @@ public class PatientServiceTest {
         when(patientRepository.findById(Mockito.any())).thenReturn(Optional.empty());
 
         assertThrows(PatientNotFoundException.class, () -> patientService.updatePatient(UUID.randomUUID(), PatientRequestDTO.builder().build()));
+
+        verify(patientRepository).findById(Mockito.any());
+        verifyNoMoreInteractions(patientRepository);
     }
 
     @Test
@@ -238,7 +300,7 @@ public class PatientServiceTest {
         UUID patientId = UUID.randomUUID();
 
         Patient patient = Patient.builder()
-                .id(patientId)
+                .patientId(patientId)
                 .firstName("David")
                 .lastName("Chomenko")
                 .gender(Enum.valueOf(Gender.class, Gender.MALE.toString()))
@@ -258,16 +320,20 @@ public class PatientServiceTest {
                 .weight(80.3)
                 .height(185.5)
                 .email("test2mail@test.com")
-                .phoneNumber("+1 380 223 98 83")
+                .phoneNumber("+1 (380) 223 98 83")
                 .dateOfBirth(LocalDate.parse("2009-09-03"))
                 .address("Test Block 23/3")
                 .registeredDate(LocalDate.parse("2020-01-01"))
                 .build();
 
         when(patientRepository.findById(Mockito.any())).thenReturn(Optional.of(patient));
-        when(patientRepository.existsByEmailAndIdNot(patient.getEmail(), patientId)).thenReturn(true);
+        when(patientRepository.existsByEmailAndPatientIdNot(patient.getEmail(), patientId)).thenReturn(true);
 
         assertThrows(EmailAlreadyExistsException.class, () -> patientService.updatePatient(patientId, request));
+
+        verify(patientRepository).findById(patientId);
+        verify(patientRepository).existsByEmailAndPatientIdNot(patient.getEmail(), patientId);
+        verifyNoMoreInteractions(patientRepository);
     }
 
     @Test
@@ -277,5 +343,6 @@ public class PatientServiceTest {
         patientService.deletePatient(patientId);
 
         verify(patientRepository, times(1)).deleteById(patientId);
+        verifyNoMoreInteractions(patientRepository);
     }
 }

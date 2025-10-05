@@ -1,25 +1,25 @@
-package org.com.patientservice.model;
+package org.com.doctorservice.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.com.patientservice.model.genders.Gender;
+import org.com.doctorservice.model.gender.Genders;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
-@Table(name = "patient")
+@Table(name = "doctor")
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Patient {
+@Builder
+public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID patientId;
+    private UUID doctorId;
 
     @NotNull
     private String firstName;
@@ -27,30 +27,25 @@ public class Patient {
     @NotNull
     private String lastName;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    private Gender gender;
-
     @NotNull
-    private Double weight;
-
-    @NotNull
-    private Double height;
+    private Genders gender;
 
     @NotNull
     @Email
+    @Column(unique = true)
     private String email;
 
     @NotNull
     private String phoneNumber;
 
     @NotNull
-    private LocalDate dateOfBirth;
+    private String specialization;
+
+    @Column(precision = 2, scale = 1)
+    @NotNull
+    private BigDecimal rating;
 
     @NotNull
-    private String address;
-
-    @NotNull
-    private LocalDate registeredDate;
-
+    private String schedule;
 }

@@ -1,0 +1,3 @@
+### GET request to example server
+GET localhost:1011/doc/doctorsBySpecialization/Oncologist
+###

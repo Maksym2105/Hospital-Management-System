@@ -1,0 +1,14 @@
+### PUT request to example server
+PUT localhost:1011/doc/56a3f48c-bca3-4b60-ac48-6db4ed9382ad
+Content-Type: application/json
+
+{
+  "firstName": "Majka UPD",
+  "lastName": "Slyszhek",
+  "email": "majka@example.com",
+  "phoneNumber": "+1 (930) 224 4409",
+  "specialization": "Hepatologist",
+  "schedule": "From Tuesday to Friday, From 12:00 AM to 18:00 PM"
+}
+
+###

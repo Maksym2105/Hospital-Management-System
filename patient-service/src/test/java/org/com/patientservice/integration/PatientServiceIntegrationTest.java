@@ -48,7 +48,7 @@ public class PatientServiceIntegrationTest {
         registry.add("spring.datasource.url", postgres::getJdbcUrl);
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
-        registry.add("spring.jpa.hibernate.ddl.auto", () -> "update");
+        registry.add("spring.jpa.hibernate.ddl-auto", () -> "update");
         registry.add("spring.sql.init.mode", () -> "always");
     }
 
@@ -62,7 +62,7 @@ public class PatientServiceIntegrationTest {
                 .weight(80.3)
                 .height(180.5)
                 .email("test@mail.com")
-                .phoneNumber("+1111111111")
+                .phoneNumber("+3 (44) 2234 321")
                 .dateOfBirth(LocalDate.parse("2000-01-01"))
                 .address("ST test 4/3")
                 .registeredDate(LocalDate.parse("2020-01-01"))
