@@ -7,7 +7,10 @@ public enum PatientMessages {
     RESPONSE_EMPTY("Response is empty"),
     EMAIL_ALREADY_EXISTS("Email already exists"),
     PATIENT_NOT_FOUND("Patient not found"),
-    API_FOR_MANAGING_PATIENTS("API for managing patients");
+    API_FOR_MANAGING_PATIENTS("API for managing patients"),
+    PATIENT_CREATED("Patient created"),
+    PATIENT_UPDATED("Patient updated"),
+    PATIENT_FOUND("Patient found");
 
     private final String message;
 

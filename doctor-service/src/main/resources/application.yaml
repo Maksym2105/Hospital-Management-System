@@ -19,6 +19,8 @@ spring:
 #  h2:
 #    console:
 #      path: /h2-console
+  kafka:
+    spring.json.trusted.packages: "*"
 
 server:
   port: 1011

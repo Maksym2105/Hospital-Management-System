@@ -4,6 +4,7 @@ import org.com.patientservice.dto.PatientRequestDTO;
 import org.com.patientservice.dto.PatientResponseDTO;
 import org.com.patientservice.exception.EmailAlreadyExistsException;
 import org.com.patientservice.exception.PatientNotFoundException;
+import org.com.patientservice.kafka.KafkaProducer;
 import org.com.patientservice.model.Patient;
 import org.com.patientservice.model.genders.Gender;
 import org.com.patientservice.repository.PatientRepository;
@@ -30,6 +31,9 @@ public class PatientServiceTest {
 
     @Mock
     PatientRepository patientRepository;
+
+    @Mock
+    KafkaProducer kafkaProducer;
 
     @InjectMocks
     PatientService patientService;

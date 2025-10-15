@@ -5,6 +5,7 @@ import org.com.patientservice.dto.PatientRequestDTO;
 import org.com.patientservice.dto.PatientResponseDTO;
 import org.com.patientservice.exception.EmailAlreadyExistsException;
 import org.com.patientservice.exception.PatientNotFoundException;
+import org.com.patientservice.kafka.KafkaProducer;
 import org.com.patientservice.mapper.PatientMapper;
 import org.com.patientservice.messages.PatientMessages;
 import org.com.patientservice.model.Patient;
@@ -24,6 +25,7 @@ public class PatientService {
 
     private static final Logger log = LoggerFactory.getLogger(PatientService.class);
     private final PatientRepository patientRepository;
+    private final KafkaProducer kafkaProducer;
 
     public List<PatientResponseDTO> getPatients () {
         List<Patient> patientList = patientRepository.findAll();
@@ -46,10 +48,12 @@ public class PatientService {
             throw new EmailAlreadyExistsException(PatientMessages.EMAIL_ALREADY_EXISTS.getMessage());
         }
 
-        Patient patient = PatientMapper.toModel(patientRequestDTO);
+        Patient patient = patientRepository.save(PatientMapper.toModel(patientRequestDTO));
 
-        return PatientMapper.toDTO(patientRepository.save(patient));
+        PatientResponseDTO response = PatientMapper.toDTO(patient);
+        kafkaProducer.sendPatientCreated(response);
 
+        return PatientMapper.toDTO(patient);
     }
 
     public PatientResponseDTO updatePatient(UUID id, PatientRequestDTO request){
@@ -69,10 +73,14 @@ public class PatientService {
 
         Patient updatedPatient = patientRepository.save(patient);
 
+        PatientResponseDTO response = PatientMapper.toDTO(updatedPatient);
+        kafkaProducer.sendPatientUpdated(response);
+
         return PatientMapper.toDTO(updatedPatient);
     }
 
     public void deletePatient(UUID id){
         patientRepository.deleteById(id);
+        kafkaProducer.sendPatientDeleted(id);
     }
 }

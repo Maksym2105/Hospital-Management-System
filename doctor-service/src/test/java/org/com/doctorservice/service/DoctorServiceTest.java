@@ -5,6 +5,7 @@ import org.com.doctorservice.dto.DoctorResponseDTO;
 import org.com.doctorservice.exception.DoctorNotFoundException;
 import org.com.doctorservice.exception.EmailAlreadyExistsException;
 import org.com.doctorservice.exception.NotValidException;
+import org.com.doctorservice.kafka.KafkaProducer;
 import org.com.doctorservice.model.Doctor;
 import org.com.doctorservice.model.gender.Genders;
 import org.com.doctorservice.repository.DoctorRepository;
@@ -30,6 +31,9 @@ public class DoctorServiceTest {
 
     @Mock
     private DoctorRepository doctorRepository;
+
+    @Mock
+    private KafkaProducer kafkaProducer;
 
     @InjectMocks
     private DoctorService doctorService;
