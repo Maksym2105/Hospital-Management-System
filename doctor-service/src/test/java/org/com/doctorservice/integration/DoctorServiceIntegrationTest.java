@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.com.doctorservice.dto.DoctorRequestDTO;
 import org.com.doctorservice.dto.DoctorResponseDTO;
 import org.com.doctorservice.kafka.KafkaProducer;
-import org.com.doctorservice.model.gender.Genders;
+import org.com.doctorservice.additional.Genders;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

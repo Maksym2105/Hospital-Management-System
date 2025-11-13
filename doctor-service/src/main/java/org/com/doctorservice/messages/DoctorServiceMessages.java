@@ -5,7 +5,8 @@ public enum DoctorServiceMessages {
     DOCTOR_IS_EMPTY("Doctor is empty!"),
     ARGUMENTS_NOT_VALID("Argument not valid!"),
     COMPONENT_IS_EMPTY("Component is empty!"),
-    EMAIL_ALREADY_EXISTS("Email already exists!");
+    EMAIL_ALREADY_EXISTS("Email already exists!"),
+    EMPTY_SCHEDULE("Empty schedule!");
 
     private final String message;
 

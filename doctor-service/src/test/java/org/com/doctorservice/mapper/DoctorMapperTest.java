@@ -6,7 +6,7 @@ import org.com.doctorservice.exception.EmptyComponentException;
 import org.com.doctorservice.exception.EmptyModelException;
 import org.com.doctorservice.exception.NotValidException;
 import org.com.doctorservice.model.Doctor;
-import org.com.doctorservice.model.gender.Genders;
+import org.com.doctorservice.additional.Genders;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

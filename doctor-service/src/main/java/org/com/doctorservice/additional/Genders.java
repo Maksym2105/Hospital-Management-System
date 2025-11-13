@@ -1,4 +1,4 @@
-package org.com.doctorservice.model.gender;
+package org.com.doctorservice.additional;
 
 public enum Genders {
     MALE,

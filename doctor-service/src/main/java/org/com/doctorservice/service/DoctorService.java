@@ -9,7 +9,7 @@ import org.com.doctorservice.kafka.KafkaProducer;
 import org.com.doctorservice.mapper.DoctorMapper;
 import org.com.doctorservice.messages.DoctorServiceMessages;
 import org.com.doctorservice.model.Doctor;
-import org.com.doctorservice.model.gender.Genders;
+import org.com.doctorservice.additional.Genders;
 import org.com.doctorservice.repository.DoctorRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +24,7 @@ public class DoctorService {
     private final KafkaProducer kafkaProducer;
 
     public List<DoctorResponseDTO> getDoctors(){
-        List<Doctor> doctors = doctorRepository.findAll();
-
-        List<DoctorResponseDTO> responseDTOs = doctors.stream()
-                .map(DoctorMapper::toResponseDTO)
-                .toList();
-
-        return responseDTOs;
+        return mapList(doctorRepository.findAll());
     }
 
     public DoctorResponseDTO getDoctorById(UUID doctorId){
@@ -40,23 +34,11 @@ public class DoctorService {
     }
 
     public List<DoctorResponseDTO> getAllDoctorsBySpecialization(String specialization){
-        List<Doctor> doctors = doctorRepository.findAllBySpecialization( specialization);
-
-        List<DoctorResponseDTO> responseDTOs = doctors.stream()
-                .map(DoctorMapper::toResponseDTO)
-                .toList();
-
-        return responseDTOs;
+        return mapList(doctorRepository.findAllBySpecialization(specialization));
     }
 
     public List<DoctorResponseDTO> findAllDoctorsByGender(Genders gender) {
-        List<Doctor> doctors = doctorRepository.findAllDoctorsByGender(gender);
-
-        List<DoctorResponseDTO> responseDTOs = doctors.stream()
-                .map(DoctorMapper::toResponseDTO)
-                .toList();
-
-        return responseDTOs;
+        return mapList(doctorRepository.findAllDoctorsByGender(gender));
     }
 
     public DoctorResponseDTO createDoctor(DoctorRequestDTO doctorRequestDTO){
@@ -64,7 +46,9 @@ public class DoctorService {
             throw new EmailAlreadyExistsException(DoctorServiceMessages.EMAIL_ALREADY_EXISTS.getMessage());
         }
 
-        Doctor doctor = doctorRepository.save(DoctorMapper.toModel(doctorRequestDTO));
+        Doctor doctor = DoctorMapper.toModel(doctorRequestDTO);
+
+        doctorRepository.save(doctor);
 
         DoctorResponseDTO response = DoctorMapper.toResponseDTO(doctor);
         kafkaProducer.sendDoctorCreated(response);
@@ -84,18 +68,29 @@ public class DoctorService {
         doctor.setEmail(request.getEmail());
         doctor.setPhoneNumber(request.getPhoneNumber());
         doctor.setSpecialization(request.getSpecialization());
-        doctor.setSchedule(request.getSchedule());
+        doctor.setDoctorStatus(request.getDoctorStatus());
+
+        doctor.getSchedules().clear();
+        DoctorMapper.toModelSchedule(request.getSchedule()).stream()
+                .peek(schedule -> schedule.setDoctor(doctor))
+                .forEach(doctor.getSchedules()::add);
 
         Doctor updatedDoctor = doctorRepository.save(doctor);
 
         DoctorResponseDTO response =  DoctorMapper.toResponseDTO(updatedDoctor);
         kafkaProducer.sendDoctorUpdated(response);
 
-        return DoctorMapper.toResponseDTO(updatedDoctor);
+        return response;
     }
 
     public void deleteDoctor(UUID id){
         doctorRepository.deleteById(id);
         kafkaProducer.sendDoctorDeleted(id);
+    }
+
+    private List<DoctorResponseDTO> mapList(List<Doctor> doctors){
+        return doctors.stream()
+                .map(DoctorMapper::toResponseDTO)
+                .toList();
     }
 }

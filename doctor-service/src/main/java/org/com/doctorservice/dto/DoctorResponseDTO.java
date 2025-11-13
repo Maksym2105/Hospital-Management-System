@@ -2,6 +2,9 @@ package org.com.doctorservice.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import org.com.doctorservice.model.Schedule;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -15,5 +18,6 @@ public class DoctorResponseDTO {
     private String phoneNumber;
     private String specialization;
     private String rating;
-    private String schedule;
+    private String doctorStatus;
+    private List<ScheduleResponseDTO> scheduleList;
 }

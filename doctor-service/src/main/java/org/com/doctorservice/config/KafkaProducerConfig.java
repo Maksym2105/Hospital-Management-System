@@ -22,7 +22,7 @@ public class KafkaProducerConfig {
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        config.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
+        config.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, true);
         config.put("spring.json.trusted.packages", "*");
 
         return new DefaultKafkaProducerFactory<>(config);

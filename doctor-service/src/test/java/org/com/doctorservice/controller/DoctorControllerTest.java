@@ -6,7 +6,7 @@ import org.com.doctorservice.dto.DoctorResponseDTO;
 import org.com.doctorservice.exception.EmptyComponentException;
 import org.com.doctorservice.exception.EmptyModelException;
 import org.com.doctorservice.messages.DoctorServiceMessages;
-import org.com.doctorservice.model.gender.Genders;
+import org.com.doctorservice.additional.Genders;
 import org.com.doctorservice.service.DoctorService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

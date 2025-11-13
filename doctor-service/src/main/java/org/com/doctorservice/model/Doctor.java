@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.com.doctorservice.model.gender.Genders;
+import org.com.doctorservice.additional.DoctorStatus;
+import org.com.doctorservice.additional.Genders;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -46,6 +48,10 @@ public class Doctor {
     @NotNull
     private BigDecimal rating;
 
+    @Enumerated(EnumType.STRING)
     @NotNull
-    private String schedule;
+    private DoctorStatus doctorStatus;
+
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Schedule> schedules;
 }

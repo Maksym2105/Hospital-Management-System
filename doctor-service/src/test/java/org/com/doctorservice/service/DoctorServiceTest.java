@@ -7,7 +7,7 @@ import org.com.doctorservice.exception.EmailAlreadyExistsException;
 import org.com.doctorservice.exception.NotValidException;
 import org.com.doctorservice.kafka.KafkaProducer;
 import org.com.doctorservice.model.Doctor;
-import org.com.doctorservice.model.gender.Genders;
+import org.com.doctorservice.additional.Genders;
 import org.com.doctorservice.repository.DoctorRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

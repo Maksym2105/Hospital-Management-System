@@ -1,7 +1,7 @@
 package org.com.doctorservice.repository;
 
 import org.com.doctorservice.model.Doctor;
-import org.com.doctorservice.model.gender.Genders;
+import org.com.doctorservice.additional.Genders;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.com.doctorservice.dto.DoctorRequestDTO;
 import org.com.doctorservice.dto.DoctorResponseDTO;
 import org.com.doctorservice.dto.validators.CreateDoctorValidationGroup;
-import org.com.doctorservice.model.gender.Genders;
+import org.com.doctorservice.additional.Genders;
 import org.com.doctorservice.service.DoctorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -78,5 +78,4 @@ public class DoctorController {
 
         return ResponseEntity.noContent().build();
     }
-
 }

@@ -3,14 +3,43 @@ POST localhost:1011/doc
 Content-Type: application/json
 
 {
-  "firstName": "Allan",
-  "lastName": "Tombrock",
+  "firstName": "Gena",
+  "lastName": "Torchkov",
   "gender": "MALE",
-  "email": "allaldofjnv@example.com",
-  "phoneNumber": "+ 1 (440) 332 4410",
+  "email": "thebestofethemdoc@example.com",
+  "phoneNumber": "+ 1 (129) 302 4977",
   "specialization": "Cardiologist",
   "rating": 0.0,
-  "schedule": "From Monday to Friday, From 9:00 AM to 18:00 PM"
+  "doctorStatus": "ACTIVE",
+  "schedule": [
+    {
+      "scheduleStartTime": "09:00",
+      "scheduleEndTime": "15:00",
+      "scheduleDate": "2025-05-02",
+      "breakStartTime": "13:00",
+      "breakEndTime": "14:00",
+      "customDayOfTheWeek" : "MONDAY",
+      "isDayOff": false
+    },
+    {
+      "scheduleStartTime": "09:00",
+      "scheduleEndTime": "16:30",
+      "scheduleDate": "2025-05-03",
+      "breakStartTime": "13:00",
+      "breakEndTime": "14:00",
+      "customDayOfTheWeek": "TUESDAY",
+      "isDayOff": false
+    },
+    {
+      "scheduleStartTime": "08:30",
+      "scheduleEndTime": "15:30",
+      "scheduleDate": "2025-05-04",
+      "breakStartTime": "13:00",
+      "breakEndTime": "14:00",
+      "customDayOfTheWeek": "THURSDAY",
+      "isDayOff": false
+    }
+  ]
 }
 
 ###

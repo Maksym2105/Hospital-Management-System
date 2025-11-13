@@ -1,14 +1,25 @@
 ### PUT request to example server
-PUT localhost:1011/doc/56a3f48c-bca3-4b60-ac48-6db4ed9382ad
+PUT localhost:1011/doc/4809e1a7-7dec-43b0-b5f2-d2eb303455b8
 Content-Type: application/json
 
 {
   "firstName": "Majka UPC",
   "lastName": "Slyszhek",
-  "email": "majka@example.com",
-  "phoneNumber": "+1 (930) 224 4409",
+  "email": "majkamlm@example.com",
+  "phoneNumber": "+1 (900) 224 4409",
   "specialization": "Hepatologist",
-  "schedule": "From Tuesday to Friday, From 12:00 AM to 18:00 PM"
+  "doctorStatus": "INACTIVE",
+  "schedule": [
+    {
+      "scheduleStartTime": "09:00",
+      "scheduleEndTime": "15:00",
+      "scheduleDate": "2025-05-02",
+      "breakStartTime": "13:00",
+      "breakEndTime": "14:00",
+      "customDayOfTheWeek" : "MONDAY",
+      "isDayOff": true
+    }
+  ]
 }
 
 ###

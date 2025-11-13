@@ -67,4 +67,13 @@ public class HandlerException {
         errors.put("message", ex.getMessage());
         return ResponseEntity.badRequest().body(errors);
     }
+
+    @ExceptionHandler(EmptyScheduleException.class)
+    public ResponseEntity<Map<String, String>> handleEmptyScheduleException(EmptyScheduleException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        log.warn("Empty schedule received{}", ex.getMessage());
+        errors.put("message", ex.getMessage());
+        return ResponseEntity.badRequest().body(errors);
+    }
 }

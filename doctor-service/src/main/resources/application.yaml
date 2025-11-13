@@ -2,6 +2,7 @@ spring:
   application:
     name: doctor-service
 
+
 #  datasource:
 #    url: jdbc:h2:mem:mydb
 #    username: admin_viewer
@@ -21,6 +22,8 @@ spring:
 #      path: /h2-console
   kafka:
     spring.json.trusted.packages: "*"
+  main:
+    banner-mode: off
 
 server:
   port: 1011
