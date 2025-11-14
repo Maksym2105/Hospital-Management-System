@@ -2,7 +2,6 @@ package org.com.doctorservice.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import org.com.doctorservice.model.Schedule;
 
 import java.util.List;
 
