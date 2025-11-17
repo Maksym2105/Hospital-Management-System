@@ -48,12 +48,12 @@ public class DoctorService {
 
         Doctor doctor = DoctorMapper.toModel(doctorRequestDTO);
 
-        doctorRepository.save(doctor);
+        Doctor savedDoctor = doctorRepository.save(doctor);
 
-        DoctorResponseDTO response = DoctorMapper.toResponseDTO(doctor);
+        DoctorResponseDTO response = DoctorMapper.toResponseDTO(savedDoctor);
         kafkaProducer.sendDoctorCreated(response);
 
-        return DoctorMapper.toResponseDTO(doctor);
+        return response;
     }
 
     public DoctorResponseDTO updateDoctor(UUID id, DoctorRequestDTO request){
