@@ -170,7 +170,7 @@ public class DoctorServiceTest {
     }
 
     @Test
-    void getDoctorById_ShouldThrowException_whenDoctorIdIsNull() {
+    void getDoctorByIdShouldThrowExceptionWhenDoctorIdIsNull() {
         UUID doctorId = UUID.randomUUID();
 
         when(doctorRepository.findById(doctorId)).thenReturn(Optional.empty());
