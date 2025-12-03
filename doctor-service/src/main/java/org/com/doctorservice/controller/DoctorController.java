@@ -40,16 +40,16 @@ public class DoctorController {
     }
 
     @Operation(summary = "Get doctors by specialization")
-    @GetMapping("/specialization/{specialization}")
-    public ResponseEntity<List<DoctorResponseDTO>> getDoctorsBySpecialization(@PathVariable String specialization) {
+    @GetMapping("/filterBySpecialization")
+    public ResponseEntity<List<DoctorResponseDTO>> getDoctorsBySpecialization(@RequestParam String specialization) {
         List<DoctorResponseDTO> doctors = doctorService.getAllDoctorsBySpecialization(specialization);
 
         return ResponseEntity.ok().body(doctors);
     }
 
     @Operation(summary = "Get doctors by gender")
-    @GetMapping("/gender/{gender}")
-    public ResponseEntity<List<DoctorResponseDTO>> getDoctorsByGender(@PathVariable Genders gender) {
+    @GetMapping("/filterByGender")
+    public ResponseEntity<List<DoctorResponseDTO>> getDoctorsByGender(@RequestParam Genders gender) {
         List<DoctorResponseDTO> doctors = doctorService.findAllDoctorsByGender(gender);
 
         return ResponseEntity.ok().body(doctors);

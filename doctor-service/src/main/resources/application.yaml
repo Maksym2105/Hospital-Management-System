@@ -2,24 +2,6 @@ spring:
   application:
     name: doctor-service
 
-
-#  datasource:
-#    url: jdbc:h2:mem:mydb
-#    username: admin_viewer
-#    password: password
-#
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#
-#    database-platform: org.hibernate.dialect.H2Dialect
-#
-#  sql:
-#    init:
-#      mode: always
-#  h2:
-#    console:
-#      path: /h2-console
   kafka:
     spring.json.trusted.packages: "*"
   main:
@@ -27,7 +9,6 @@ spring:
 
 server:
   port: 1011
-
 
 logging:
   level:

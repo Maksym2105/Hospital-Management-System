@@ -5,28 +5,17 @@ import org.com.doctorservice.dto.DoctorRequestDTO;
 import org.com.doctorservice.dto.DoctorResponseDTO;
 import org.com.doctorservice.dto.ScheduleRequestDTO;
 import org.com.doctorservice.dto.ScheduleResponseDTO;
-import org.com.doctorservice.exception.EmptyComponentException;
-import org.com.doctorservice.exception.EmptyModelException;
 import org.com.doctorservice.exception.EmptyScheduleException;
-import org.com.doctorservice.exception.NotValidException;
 import org.com.doctorservice.messages.DoctorServiceMessages;
 import org.com.doctorservice.model.Doctor;
 import org.com.doctorservice.model.Schedule;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @UtilityClass
 public class DoctorMapper {
-    static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-
     public static DoctorResponseDTO toResponseDTO(Doctor doctor) {
-        if (doctor == null) {
-            throw new EmptyModelException(DoctorServiceMessages.DOCTOR_IS_EMPTY.getMessage());
-        }
-
         DoctorResponseDTO doctorResponseDTO = DoctorResponseDTO.builder()
                 .id(doctor.getDoctorId().toString())
                 .firstName(doctor.getFirstName())
@@ -40,15 +29,10 @@ public class DoctorMapper {
                 .scheduleList(toScheduleDTO(doctor.getSchedules()))
                 .build();
 
-        validate(doctorResponseDTO);
-
         return doctorResponseDTO;
     }
 
     public static Doctor toModel(DoctorRequestDTO doctorRequestDTO) {
-        if (doctorRequestDTO == null) {
-            throw new EmptyComponentException(DoctorServiceMessages.COMPONENT_IS_EMPTY.getMessage());
-        }
         List<Schedule> listOfSchedules = toModelSchedule(doctorRequestDTO.getSchedule());
 
         Doctor doctor = Doctor.builder()
@@ -65,46 +49,7 @@ public class DoctorMapper {
 
         listOfSchedules.forEach(listOfSchedule -> listOfSchedule.setDoctor(doctor));
 
-        validate(doctor);
-
         return doctor;
-    }
-
-    private static void validate(DoctorResponseDTO doctorResponseDTO) {
-        Map<String, String> map = Map.of(
-                "id", doctorResponseDTO.getId(),
-                "FirstName", doctorResponseDTO.getFirstName(),
-                "LastName", doctorResponseDTO.getLastName(),
-                "Gender", doctorResponseDTO.getGender(),
-                "Email", doctorResponseDTO.getEmail(),
-                "PhoneNumber", doctorResponseDTO.getPhoneNumber(),
-                "Specialization", doctorResponseDTO.getSpecialization(),
-                "Rating", doctorResponseDTO.getRating()
-        );
-
-        validateFields(map, new NotValidException(DoctorServiceMessages.ARGUMENTS_NOT_VALID.getMessage()));
-    }
-
-    private static void validate(Doctor doctor) {
-        Map<String, String> map = Map.of(
-                "FirstName", doctor.getFirstName(),
-                "LastName", doctor.getLastName(),
-                "Gender", doctor.getGender().toString(),
-                "Email", doctor.getEmail(),
-                "PhoneNumber", doctor.getPhoneNumber(),
-                "Specialization", doctor.getSpecialization(),
-                "Rating", doctor.getRating().toString()
-        );
-
-        validateFields(map, new NotValidException(DoctorServiceMessages.ARGUMENTS_NOT_VALID.getMessage()));
-    }
-
-    private static void validateFields(Map<String, ?> fields, NotValidException notValidException) {
-        fields.forEach((key, value) -> {
-            if (value == null || value.toString().isBlank()) {
-                throw notValidException;
-            }
-        });
     }
 
     public static List<ScheduleResponseDTO> toScheduleDTO(List<Schedule> schedules) {
@@ -119,6 +64,7 @@ public class DoctorMapper {
                         .scheduleDate(schedule.getScheduleDate().toString())
                         .breakStartTime(schedule.getBreakStartTime().toString())
                         .breakEndTime(schedule.getBreakEndTime().toString())
+                        .isDayOff(String.valueOf(schedule.isDayOff()))
                         .build())
                 .collect(Collectors.toList());
     }

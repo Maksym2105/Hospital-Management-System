@@ -21,35 +21,42 @@ public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "doctor_id")
     private UUID doctorId;
 
     @NotNull
+    @Column(name = "first_name")
     private String firstName;
 
     @NotNull
+    @Column(name = "last_name")
     private String lastName;
 
     @Enumerated(EnumType.STRING)
     @NotNull
+    @Column(name = "gender")
     private Genders gender;
 
     @NotNull
     @Email
-    @Column(unique = true)
+    @Column(unique = true, name = "email")
     private String email;
 
     @NotNull
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     @NotNull
+    @Column(name = "specialization")
     private String specialization;
 
-    @Column(precision = 2, scale = 1)
+    @Column(precision = 2, scale = 1, name = "rating")
     @NotNull
     private BigDecimal rating;
 
     @Enumerated(EnumType.STRING)
     @NotNull
+    @Column(name = "doctor_status")
     private DoctorStatus doctorStatus;
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)

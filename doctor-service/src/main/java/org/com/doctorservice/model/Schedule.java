@@ -23,6 +23,7 @@ public class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "schedule_id")
     private UUID scheduleId;
 
     @ManyToOne
@@ -30,18 +31,23 @@ public class Schedule {
     private Doctor doctor;
 
     @NotNull
+    @Column(name = "start_time")
     private LocalTime startTime;
 
     @NotNull
+    @Column(name = "end_time")
     private LocalTime endTime;
 
     @NotNull
+    @Column(name = "schedule_date")
     private LocalDate scheduleDate;
 
     @NotNull
+    @Column(name = "break_start_time")
     private LocalTime breakStartTime;
 
     @NotNull
+    @Column(name = "break_end_time")
     private LocalTime breakEndTime;
 
     @Enumerated(EnumType.STRING)
@@ -49,5 +55,6 @@ public class Schedule {
     private CustomDayOfTheWeek customDayOfTheWeek;
 
     @NotNull
+    @Column(name = "is_day_off")
     private boolean isDayOff;
 }
