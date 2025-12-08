@@ -1,7 +1,6 @@
 package org.com.doctorservice.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.bytebuddy.utility.dispatcher.JavaDispatcher;
 import org.com.doctorservice.additional.CustomDayOfTheWeek;
 import org.com.doctorservice.additional.DoctorStatus;
 import org.com.doctorservice.dto.DoctorRequestDTO;

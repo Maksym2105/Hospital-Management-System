@@ -178,8 +178,10 @@ public class DoctorControllerTest {
     }
 
     @Test
-    @DisplayName("/GET, /doc/{specialization} - should return doctors with specific specialization")
+    @DisplayName("/GET, /doc/filterBySpecialization - should return doctors with specific specialization")
     void getDoctorsBySpecializationShouldReturnDoctorsByRequestSpecialization() throws Exception {
+        String specialization = "Dermatologist";
+
         ScheduleResponseDTO firstDoctorSchedule = scheduleResponseBuilder();
 
         ScheduleResponseDTO secondDoctorSchedule = scheduleResponseBuilder();
@@ -190,8 +192,6 @@ public class DoctorControllerTest {
 
         ScheduleResponseDTO fourthDoctorSchedule = scheduleResponseBuilder();
         fourthDoctorSchedule.setDayOfWeek("FRIDAY");
-
-        String specialization = "Dermatologist";
 
         DoctorResponseDTO response = DoctorResponseDTO.builder()
                 .id(UUID.randomUUID().toString())
@@ -223,7 +223,8 @@ public class DoctorControllerTest {
 
         when(doctorService.getAllDoctorsBySpecialization(specialization)).thenReturn(models);
 
-        mockMvc.perform(get("/doc/specialization/{specialization}", specialization))
+        mockMvc.perform(get("/doc/filterBySpecialization")
+                        .param("specialization", specialization))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].specialization").value(specialization))
@@ -234,13 +235,14 @@ public class DoctorControllerTest {
     }
 
     @Test
-    @DisplayName("GET, /doc/specialization{specialization} - should return empty list when no doctors")
+    @DisplayName("GET, /doc/filterBySpecialization - should return empty list when no doctors")
     void getDoctorsBySpecializationShouldReturnEmptyListWhenNoDoctors() throws Exception {
         String specialization = "Oncologist";
 
         when(doctorService.getAllDoctorsBySpecialization(specialization)).thenReturn(List.of());
 
-        mockMvc.perform(get("/doc/specialization/{specialization}", specialization))
+        mockMvc.perform(get("/doc/filterBySpecialization")
+                        .param("specialization", specialization))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(0))
                 .andExpect(content().json("[]"));
@@ -250,7 +252,7 @@ public class DoctorControllerTest {
     }
 
     @Test
-    @DisplayName("/GET, /doc/gender/{gender} - should return doctors with specific gender")
+    @DisplayName("/GET, /doc/filterByGender - should return doctors with specific gender")
     void getDoctorsByGenderShouldReturnDoctorsBtSpecificGender() throws Exception {
         ScheduleResponseDTO firstDoctorSchedule = scheduleResponseBuilder();
 
@@ -295,7 +297,8 @@ public class DoctorControllerTest {
 
         when(doctorService.findAllDoctorsByGender(gender)).thenReturn(models);
 
-        mockMvc.perform(get("/doc/gender/{gender}", gender))
+        mockMvc.perform(get("/doc/filterByGender")
+                        .param("gender", gender.toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].gender").value(gender.toString()))
@@ -306,13 +309,14 @@ public class DoctorControllerTest {
     }
 
     @Test
-    @DisplayName("/GET, /doc/gender/{gender} - should return empty list if no doctors")
+    @DisplayName("/GET, /doc/filterByGender - should return empty list if no doctors")
     void getDoctorsByGenderShouldReturnEmptyListIfNoDoctors() throws Exception {
         Genders gender = Genders.FEMALE;
 
         when(doctorService.findAllDoctorsByGender(gender)).thenReturn(List.of());
 
-        mockMvc.perform(get("/doc/gender/{gender}", gender))
+        mockMvc.perform(get("/doc/filterByGender")
+                        .param("gender", gender.toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(0))
                 .andExpect(content().json("[]"));

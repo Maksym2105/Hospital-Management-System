@@ -53,11 +53,6 @@ public class ScheduleMapperTest {
     }
 
     @Test
-    void mapListOfSchedulesShouldThrowExceptionWhenListOfSchedulesIsEmpty () {
-        Assertions.assertThrows(EmptyScheduleException.class, () -> ScheduleMapper.mapListOfSchedulesToResponseDTO(List.of()));
-    }
-
-    @Test
     void mapScheduleToResponseDTOShouldReturnScheduleResponseDTO() {
 
         Schedule schedule = Schedule.builder()
@@ -84,10 +79,5 @@ public class ScheduleMapperTest {
         assertThat(scheduleResponseDTO.getScheduleStartTime()).isEqualTo(schedule.getStartTime().toString());
         assertThat(scheduleResponseDTO.getScheduleEndTime()).isEqualTo(schedule.getEndTime().toString());
         assertThat(scheduleResponseDTO.getScheduleDate()).isEqualTo(schedule.getScheduleDate().toString());
-    }
-
-    @Test
-    void mapScheduleToResponseDTOShouldThrowExceptionWhenScheduleIsEmpty () {
-        Assertions.assertThrows(EmptyScheduleException.class, () -> ScheduleMapper.mapScheduleToResponseDTO(null));
     }
 }

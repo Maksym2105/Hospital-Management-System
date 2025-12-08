@@ -5,6 +5,7 @@ import org.com.doctorservice.additional.CustomDayOfTheWeek;
 import org.com.doctorservice.dto.ScheduleResponseDTO;
 import org.com.doctorservice.exception.EmptyScheduleException;
 import org.com.doctorservice.service.ScheduleService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -36,6 +37,7 @@ public class ScheduleControllerTest {
     ScheduleService scheduleService;
 
     @Test
+    @DisplayName("GET, /schedule/{doctorId} - should return schedules by doctor id")
     void getScheduleByDoctorIdShouldReturnSchedule() throws Exception {
 
         UUID doctorId = UUID.randomUUID();
@@ -83,6 +85,7 @@ public class ScheduleControllerTest {
     }
 
     @Test
+    @DisplayName("/GET, /schedule/{doctorId} - should get bad request if schedule is empty")
     void getScheduleByDoctorIdShouldReturnBadRequestIfScheduleIsEmpty() throws Exception {
         UUID doctorId = UUID.randomUUID();
 
@@ -96,6 +99,7 @@ public class ScheduleControllerTest {
     }
 
     @Test
+    @DisplayName("GET, /schedule/filterByIdAndDayOfTheWeek - should return schedules by doctor id and day of the week")
     void getSchedulesByDoctorIdAndCustomDayOfTheWeekShouldReturnListOfSchedules() throws Exception {
         UUID doctorId = UUID.randomUUID();
         CustomDayOfTheWeek day = CustomDayOfTheWeek.TUESDAY;
@@ -145,6 +149,7 @@ public class ScheduleControllerTest {
     }
 
     @Test
+    @DisplayName("/GET, /schedule/filterByDoctorIdAndDayOfTheWeek - should get bad request if schedule is empty")
     void getSchedulesByDoctorIdAndDayOfTheWeekShouldReturnBadRequestIfScheduleIsEmpty() throws Exception {
         UUID doctorId = UUID.randomUUID();
         CustomDayOfTheWeek day = CustomDayOfTheWeek.THURSDAY;
@@ -161,6 +166,7 @@ public class ScheduleControllerTest {
     }
 
     @Test
+    @DisplayName("GET, /schedule/filterByIdAndDate - should return schedules by doctor id and start/end date")
     void getSchedulesByDoctorIdAndDateBetweenShouldReturnListOfSchedules() throws Exception {
         UUID doctorId = UUID.randomUUID();
         LocalDate startDate = LocalDate.of(2025, 11, 20);
@@ -222,6 +228,7 @@ public class ScheduleControllerTest {
     }
 
     @Test
+    @DisplayName("/GET, /schedule/filterByIdAndDate - should get bad request if schedule is empty")
     void getSchedulesByDoctorIdAndDateShouldReturnBadRequestIfScheduleIsEmpty() throws Exception {
         UUID doctorId = UUID.randomUUID();
         LocalDate startDate = LocalDate.of(2025, 11, 20);
@@ -237,6 +244,7 @@ public class ScheduleControllerTest {
     }
 
     @Test
+    @DisplayName("/GET, /schedule/filterByDoctorIdAndTimeBetween - should get schedules by doctor id and start/end time")
     void getSchedulesByDoctorIdAndStartTimeAndEndTimeShouldReturnListOfSchedules() throws Exception {
         UUID doctorId = UUID.randomUUID();
         LocalTime startTime = LocalTime.of(9, 0);
@@ -285,6 +293,7 @@ public class ScheduleControllerTest {
     }
 
     @Test
+    @DisplayName("/GET, /schedule/filterByIdAndTimeBetween - should get bad request if schedule is empty")
     void getSchedulesByDoctorIdAndTimeBetweenShouldReturnBadRequestIfScheduleIsEmpty() throws Exception {
         UUID doctorId = UUID.randomUUID();
         LocalTime startTime = LocalTime.of(9, 0);
@@ -303,6 +312,7 @@ public class ScheduleControllerTest {
     }
 
     @Test
+    @DisplayName("/GET, /schedule/singleScheduleByIdAndDate - should get schedules by doctor id and date")
     void getScheduleByDoctorIdAndDateShouldReturnSchedule() throws Exception {
         UUID doctorId = UUID.randomUUID();
         LocalDate date = LocalDate.of(2025, 11, 23);
@@ -332,6 +342,7 @@ public class ScheduleControllerTest {
     }
 
     @Test
+    @DisplayName("/GET, /schedule/singleScheduleByIdAndDate - should get bad request if schedule is empty")
     void getScheduleByDoctorIdAndDateShouldReturnBadRequestIfScheduleIsEmpty() throws Exception {
         UUID doctorId = UUID.randomUUID();
         LocalDate date = LocalDate.of(2025, 11, 23);

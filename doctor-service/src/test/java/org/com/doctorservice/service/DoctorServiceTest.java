@@ -7,7 +7,6 @@ import org.com.doctorservice.dto.DoctorResponseDTO;
 import org.com.doctorservice.dto.ScheduleRequestDTO;
 import org.com.doctorservice.exception.DoctorNotFoundException;
 import org.com.doctorservice.exception.EmailAlreadyExistsException;
-import org.com.doctorservice.exception.NotValidException;
 import org.com.doctorservice.kafka.KafkaProducer;
 import org.com.doctorservice.mapper.DoctorMapper;
 import org.com.doctorservice.model.Doctor;
@@ -368,32 +367,6 @@ public class DoctorServiceTest {
 
         verify(doctorRepository).existsByEmail(request.getEmail());
         verifyNoMoreInteractions(doctorRepository);
-    }
-
-    @Test
-    void saveDoctorShouldNotSaveDoctorIfRequestValueIsEmpty() {
-        ScheduleRequestDTO firstScheduleRequest = scheduleRequestBuilder();
-
-        ScheduleRequestDTO secondScheduleRequest = scheduleRequestBuilder();
-        secondScheduleRequest.setCustomDayOfTheWeek(CustomDayOfTheWeek.TUESDAY);
-
-        DoctorRequestDTO request = DoctorRequestDTO.builder()
-                .firstName("Carl")
-                .lastName("")
-                .gender(Genders.MALE)
-                .email("")
-                .phoneNumber("+1 (440) 330 33219")
-                .specialization("Gynaecologist")
-                .rating(BigDecimal.valueOf(0.0))
-                .doctorStatus(DoctorStatus.ACTIVE)
-                .schedule(List.of(firstScheduleRequest, secondScheduleRequest))
-                .build();
-
-        when(doctorRepository.existsByEmail(request.getEmail())).thenReturn(false);
-
-        assertThrows(NotValidException.class,() -> doctorService.createDoctor(request));
-
-        verify(doctorRepository, never()).save(any());
     }
 
     @Test

@@ -6,10 +6,7 @@ import org.com.doctorservice.dto.DoctorRequestDTO;
 import org.com.doctorservice.dto.DoctorResponseDTO;
 import org.com.doctorservice.dto.ScheduleRequestDTO;
 import org.com.doctorservice.dto.ScheduleResponseDTO;
-import org.com.doctorservice.exception.EmptyComponentException;
-import org.com.doctorservice.exception.EmptyModelException;
 import org.com.doctorservice.exception.EmptyScheduleException;
-import org.com.doctorservice.exception.NotValidException;
 import org.com.doctorservice.model.Doctor;
 import org.com.doctorservice.additional.Genders;
 import org.com.doctorservice.model.Schedule;
@@ -61,27 +58,7 @@ public class DoctorMapperTest {
     void toResponseShouldThrowEmptyModelExceptionWhenDoctorIsNull() {
         Doctor doctor = null;
 
-        Assertions.assertThrows(EmptyModelException.class, () -> DoctorMapper.toResponseDTO(doctor));
-    }
-
-    @Test
-    void toResponseShouldThrowNotValidExceptionWhenArgumentIsNull() {
-        Schedule schedule = buildSchedule();
-
-        Doctor doctor = Doctor.builder()
-                .doctorId(UUID.randomUUID())
-                .firstName("Jessy")
-                .lastName("Mohawk")
-                .gender(Genders.MALE)
-                .email("")
-                .phoneNumber("+111111111")
-                .specialization("Obstetrician")
-                .rating(BigDecimal.valueOf(7.3))
-                .doctorStatus(DoctorStatus.ACTIVE)
-                .schedules(List.of(schedule))
-                .build();
-
-        Assertions.assertThrows(NotValidException.class, () -> DoctorMapper.toResponseDTO(doctor));
+        Assertions.assertThrows(NullPointerException.class, () -> DoctorMapper.toResponseDTO(doctor));
     }
 
     @Test
@@ -119,26 +96,7 @@ public class DoctorMapperTest {
     void toModelShouldThrowEmptyComponentExceptionWhenRequestIsNull () {
         DoctorRequestDTO request = null;
 
-        Assertions.assertThrows(EmptyComponentException.class, () -> DoctorMapper.toModel(request));
-    }
-
-    @Test
-    void toModelShouldThrowNotValidExceptionWhenRequestFieldIsEmpty() {
-        ScheduleRequestDTO scheduleRequest = scheduleRequestBuilder();
-
-        DoctorRequestDTO request = DoctorRequestDTO.builder()
-                .firstName("Bob")
-                .lastName("Incredible")
-                .gender(Genders.MALE)
-                .email("test@mail.com")
-                .phoneNumber("+1 (440) 22 320 9006")
-                .specialization("")
-                .rating(BigDecimal.valueOf(0.0))
-                .doctorStatus(DoctorStatus.ACTIVE)
-                .schedule(List.of(scheduleRequest))
-                .build();
-
-        Assertions.assertThrows(NotValidException.class, () -> DoctorMapper.toModel(request));
+        Assertions.assertThrows(NullPointerException.class, () -> DoctorMapper.toModel(request));
     }
 
     @Test

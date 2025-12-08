@@ -1,5 +1,7 @@
 package org.com.doctorservice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.com.doctorservice.additional.CustomDayOfTheWeek;
 import org.com.doctorservice.dto.ScheduleResponseDTO;
@@ -15,10 +17,12 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/schedule")
 @RequiredArgsConstructor
+@Tag(name = "Schedule", description = "API for schedules")
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
+    @Operation(summary = "Get schedules by doctor id")
     @GetMapping("/{doctorId}")
     public ResponseEntity<List<ScheduleResponseDTO>> getSchedulesByDoctorId (@PathVariable UUID doctorId) {
         List<ScheduleResponseDTO> scheduleResponseList = scheduleService.findAllByDoctorId(doctorId);
@@ -26,6 +30,7 @@ public class ScheduleController {
         return ResponseEntity.ok().body(scheduleResponseList);
     }
 
+    @Operation(summary = "Get schedules by doctor id and day of the week")
     @GetMapping("/filterByIdAndDayOfTheWeek")
     public ResponseEntity<List<ScheduleResponseDTO>> getSchedulesByDoctorIdAndCustomDayOfTheWeek(
             @RequestParam UUID doctorId, @RequestParam CustomDayOfTheWeek customDayOfTheWeek
@@ -35,6 +40,7 @@ public class ScheduleController {
         return ResponseEntity.ok().body(scheduleResponseList);
     }
 
+    @Operation(summary = "Get schedules by doctor id and start/end date")
     @GetMapping("/filterByIdAndDate")
     public ResponseEntity<List<ScheduleResponseDTO>> getSchedulesByDoctorIdAndScheduleDateBetween(
             @RequestParam UUID doctorId, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate
@@ -44,6 +50,7 @@ public class ScheduleController {
         return ResponseEntity.ok().body(scheduleResponseList);
     }
 
+    @Operation(summary = "Get schedules by doctor id and start/end time")
     @GetMapping("/filterByDoctorIdAndTimeBetween")
     public ResponseEntity<List<ScheduleResponseDTO>> getSchedulesByDoctorIdAndStartTimeAndEndTime(
             @RequestParam UUID doctorId, @RequestParam LocalTime startTime, @RequestParam LocalTime endTime
@@ -55,6 +62,7 @@ public class ScheduleController {
         return ResponseEntity.ok().body(scheduleResponseList);
     }
 
+    @Operation(summary = "Get schedule by doctor id and date")
     @GetMapping("/singleScheduleFilterByDate")
     public ResponseEntity<ScheduleResponseDTO> getScheduleByDoctorIdAndScheduleDate(
             @RequestParam UUID doctorId, @RequestParam LocalDate scheduleDate

@@ -83,12 +83,14 @@ public class ScheduleServiceTest {
     }
 
     @Test
-    void findSchedulesByIdShouldThrowEmptyScheduleExceptionWhenScheduleNotFound () {
+    void findSchedulesByIdShouldReturnEmptyListWhenNoSchedulesFound () {
         UUID doctorId = UUID.randomUUID();
 
         when(scheduleRepository.findByDoctorDoctorId(doctorId)).thenReturn(List.of());
 
-        assertThatThrownBy(() -> scheduleService.findAllByDoctorId(doctorId)).isInstanceOf(EmptyScheduleException.class);
+        List<ScheduleResponseDTO> result = scheduleService.findAllByDoctorId(doctorId);
+
+        assertThat(result.isEmpty()).isTrue();
 
         verify(scheduleRepository).findByDoctorDoctorId(doctorId);
         verifyNoMoreInteractions(scheduleRepository);
@@ -143,12 +145,14 @@ public class ScheduleServiceTest {
     }
 
     @Test
-    void findSchedulesByIdAndDayOfTheWeemShouldThrowEmptyScheduleExceptionWhenScheduleNotFound () {
+    void findSchedulesByIdAndDayOfTheWeemShouldReturnEmptyListWhenNoSchedulesFound () {
         UUID doctorId = UUID.randomUUID();
 
         when(scheduleRepository.findByDoctorDoctorId(doctorId)).thenReturn(List.of());
 
-        assertThatThrownBy(() -> scheduleService.findAllByDoctorId(doctorId)).isInstanceOf(EmptyScheduleException.class);
+        List<ScheduleResponseDTO> result = scheduleService.findAllByDoctorId(doctorId);
+
+        assertThat(result.isEmpty()).isTrue();
 
         verify(scheduleRepository).findByDoctorDoctorId(doctorId);
         verifyNoMoreInteractions(scheduleRepository);
@@ -203,7 +207,7 @@ public class ScheduleServiceTest {
     }
 
     @Test
-    void findSchedulesByIdAndScheduleDateBetweenShouldThrowEmptyScheduleExceptionWhenScheduleNotFound () {
+    void findSchedulesByIdAndScheduleDateBetweenShouldReturnEmptyListWhenNoSchedulesFound () {
         UUID doctorId = UUID.randomUUID();
 
         LocalDate firstScheduleDate = LocalDate.of(2025, 11, 10);
@@ -211,7 +215,9 @@ public class ScheduleServiceTest {
 
         when(scheduleRepository.findByDoctorDoctorIdAndScheduleDateBetween(doctorId, firstScheduleDate, secondScheduleDate)).thenReturn(List.of());
 
-        assertThatThrownBy(() -> scheduleService.findAllByDoctorIdAndScheduleDateBetween(doctorId, firstScheduleDate, secondScheduleDate)).isInstanceOf(EmptyScheduleException.class);
+        List<ScheduleResponseDTO> result = scheduleService.findAllByDoctorIdAndScheduleDateBetween(doctorId, firstScheduleDate, secondScheduleDate);
+
+        assertThat(result.isEmpty()).isTrue();
 
         verify(scheduleRepository).findByDoctorDoctorIdAndScheduleDateBetween(doctorId, firstScheduleDate, secondScheduleDate);
         verifyNoMoreInteractions(scheduleRepository);
@@ -269,7 +275,7 @@ public class ScheduleServiceTest {
     }
 
     @Test
-    void findScheduleByIdAndStartTimeBetweenAndEndTimeShouldThrowEmptyScheduleExceptionWhenScheduleNotFound () {
+    void findScheduleByIdAndStartTimeBetweenAndEndTimeShouldReturnEmptyListWhenNoSchedulesFound () {
         UUID doctorId = UUID.randomUUID();
 
         LocalTime startTime = LocalTime.of(10, 0);
@@ -278,8 +284,11 @@ public class ScheduleServiceTest {
         when(scheduleRepository.findByDoctorDoctorIdAndStartTimeBeforeAndEndTimeAfter(
                 doctorId, startTime, endTime)).thenReturn(List.of());
 
-        assertThatThrownBy(() -> scheduleService.findAllByDoctorIdAndStartTimeBetweenAndEndTimeBetween(
-                doctorId, startTime, endTime)).isInstanceOf(EmptyScheduleException.class);
+        List<ScheduleResponseDTO> result = scheduleService.findAllByDoctorIdAndStartTimeBetweenAndEndTimeBetween(
+                doctorId, startTime, endTime
+        );
+
+        assertThat(result.isEmpty()).isTrue();
 
         verify(scheduleRepository).findByDoctorDoctorIdAndStartTimeBeforeAndEndTimeAfter(
                 doctorId, startTime, endTime);
