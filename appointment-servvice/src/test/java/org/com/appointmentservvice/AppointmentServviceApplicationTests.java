@@ -1,4 +1,4 @@
-package org.com.appointmentservice;
+package org.com.appointmentservvice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Import;
 
 @Import(TestcontainersConfiguration.class)
 @SpringBootTest
-class AppointmentServiceApplicationTests {
+class AppointmentServviceApplicationTests {
 
     @Test
     void contextLoads() {
