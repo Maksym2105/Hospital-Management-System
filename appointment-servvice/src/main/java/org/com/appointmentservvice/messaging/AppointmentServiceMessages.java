@@ -5,7 +5,8 @@ import lombok.Getter;
 public enum AppointmentServiceMessages {
 
     TEST("TEST"),
-    DOCTOR_SERVICE_UNAVAILABLE("Doctor service currently is not available");
+    DOCTOR_SERVICE_UNAVAILABLE("Doctor service currently is not available"),
+    PATIENT_SERVICE_UNAVAILABLE("Patient service currently is not available");
 
     private final String message;
 
