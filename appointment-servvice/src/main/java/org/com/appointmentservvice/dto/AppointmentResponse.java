@@ -10,8 +10,6 @@ import java.util.UUID;
 public class AppointmentResponse {
 
     private UUID id;
-    private DoctorDTO doctorDTO;
-    private PatientDTO patientDTO;
     private LocalDateTime appointmentDate;
     private AppointmentStatus appointmentStatus;
     private String status;
