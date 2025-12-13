@@ -1,5 +1,4 @@
 rootProject.name = 'hospital-management-system'
-
-include 'appointment-service'
 include 'doctor-service'
 include 'patient-service'
+include 'meeting-service'
