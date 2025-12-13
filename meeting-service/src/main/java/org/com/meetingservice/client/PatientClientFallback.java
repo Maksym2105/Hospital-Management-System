@@ -1,4 +1,28 @@
 package org.com.meetingservice.client;
 
-public class PatientClientFallback {
+import lombok.extern.slf4j.Slf4j;
+import org.com.meetingservice.dto.PatientResponseDTO;
+import org.com.meetingservice.exception.ServiceUnavailableException;
+import org.com.meetingservice.messages.MeetingServiceMessages;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+@Slf4j
+public class PatientClientFallback implements PatientClient {
+
+
+    @Override
+    public ResponseEntity<PatientResponseDTO> getPatientById(String id) {
+        log.error("Patient service unavailable - getPatientById failed for id: {}", id);
+        throw new ServiceUnavailableException(MeetingServiceMessages.SERVICE_UNAVAILABLE.getMessage());
+    }
+
+    @Override
+    public ResponseEntity<List<PatientResponseDTO>> getPatients() {
+        log.error("Patient service unavailable - getPatients failed");
+        throw new ServiceUnavailableException(MeetingServiceMessages.SERVICE_UNAVAILABLE.getMessage());
+    }
 }
