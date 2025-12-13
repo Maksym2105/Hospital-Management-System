@@ -1,0 +1,20 @@
+package org.com.meetingservice.additional;
+
+public enum Specialization {
+
+    CARDIOLOGIST,
+    DERMATOLOGIST,
+    OPHTHALMOLOGIST,
+    DENTIST,
+    NEUROLOGIST,
+    ORTHOPEDIC,
+    GASTROENTEROLOGIST,
+    SURGEON,
+    PEDIATRICIAN,
+    NEPHROLOGIST,
+    ONCOLOGIST,
+    PULMONOLOGIST,
+    GYNAECOLOGIST,
+    HEPATOLOGIST,
+    PSYCHIATRIST
+}
