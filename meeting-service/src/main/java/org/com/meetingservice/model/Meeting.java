@@ -37,7 +37,7 @@ public class Meeting {
 
     @Field(name = "patient_id")
     @NotNull
-    private UUID patient_id;
+    private UUID patientId;
 
     @Field(name = "date")
     @NotNull
