@@ -40,7 +40,7 @@ public interface DoctorClient {
     @GetMapping("/schedule/filterByIdAndDayOfTheWeek")
     ResponseEntity<List<ScheduleResponseDTO>> getSchedulesByDoctorIdAndDayOfTheWeek(@RequestParam String doctorId, @RequestParam CustomDayOfTheWeek dayOfTheWeek);
 
-    @GetMapping("/schedule/filterByDoctorIdAndTimeBetween")
+    @GetMapping("/schedule/filterByDoctorIdAndDateBetween")
     ResponseEntity<List<ScheduleResponseDTO>> getSchedulesByDoctorIdAndScheduleDateBetween(
             @RequestParam String doctorId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,

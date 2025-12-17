@@ -20,4 +20,6 @@ public interface MeetingRepository extends MongoRepository<Meeting, UUID> {
     List<Meeting> findByDoctorIdAndMeetingStatus(UUID doctorId, MeetingStatus meetingStatus);
     List<Meeting> findByMeetingStartTimeBetween(LocalTime startTime, LocalTime endTime);
     List<Meeting> findByMeetingDate(LocalDate meetingDate);
+    boolean existsDoctorIdAndMeetingDateAndMeetingStartTimeAndMeetingStatus(
+            UUID scheduleId, LocalDate meetingDate, LocalTime meetingStartTime, MeetingStatus meetingStatus);
 }

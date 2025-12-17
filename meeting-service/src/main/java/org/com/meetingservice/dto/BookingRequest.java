@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-
 @Data
 public class BookingRequest {
 
@@ -25,4 +24,10 @@ public class BookingRequest {
 
     @Size(max = 256)
     private String notes;
+
+    @Size(max = 256)
+    private String meetingLink;
+
+    @Size(max = 256)
+    private String location;
 }

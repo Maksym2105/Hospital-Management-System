@@ -31,10 +31,6 @@ public class Meeting {
     @NotNull
     private UUID doctorId;
 
-    @Field(name = "schedule_id")
-    @NotNull
-    private UUID scheduleId;
-
     @Field(name = "patient_id")
     @NotNull
     private UUID patientId;
@@ -57,6 +53,12 @@ public class Meeting {
 
     @Field(name = "notes")
     private String notes;
+
+    @Field(name = "meeting_link")
+    private String meetingLink;
+
+    @Field(name = "location")
+    private String location;
 
     @CreatedDate
     @Field(name = "created_at")
