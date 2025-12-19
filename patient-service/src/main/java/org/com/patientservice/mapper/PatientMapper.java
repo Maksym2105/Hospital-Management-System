@@ -1,6 +1,7 @@
 package org.com.patientservice.mapper;
 
 import lombok.extern.slf4j.Slf4j;
+import org.com.patientservice.additional.PatientStatus;
 import org.com.patientservice.dto.PatientRequestDTO;
 import org.com.patientservice.dto.PatientResponseDTO;
 import org.com.patientservice.exception.EmptyComponentException;
@@ -52,6 +53,7 @@ public class PatientMapper {
                 .phoneNumber(patientRequestDTO.getPhoneNumber())
                 .dateOfBirth(patientRequestDTO.getDateOfBirth())
                 .address(patientRequestDTO.getAddress())
+                .patientStatus(PatientStatus.ACTIVE)
                 .registeredDate(patientRequestDTO.getRegisteredDate())
                 .build();
 
@@ -70,6 +72,7 @@ public class PatientMapper {
                 "Email", patientResponseDTO.getEmail(),
                 "PhoneNumber", patientResponseDTO.getPhoneNumber(),
                 "DateOfBirth", patientResponseDTO.getDateOfBirth(),
+                "PatientStatus", patientResponseDTO.getStatus(),
                 "Address", patientResponseDTO.getAddress()
         );
 
@@ -91,6 +94,7 @@ public class PatientMapper {
                 "PhoneNumber", patient.getPhoneNumber(),
                 "DateOfBirth", patient.getDateOfBirth().toString(),
                 "Address", patient.getAddress(),
+                "PatientStatus", patient.getPatientStatus().toString(),
                 "RegisteredDate", patient.getRegisteredDate().toString());
 
 
