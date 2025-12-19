@@ -1,5 +1,6 @@
 package org.com.patientservice.service;
 
+import org.com.patientservice.additional.PatientStatus;
 import org.com.patientservice.dto.PatientRequestDTO;
 import org.com.patientservice.dto.PatientResponseDTO;
 import org.com.patientservice.exception.EmailAlreadyExistsException;
@@ -52,6 +53,7 @@ public class PatientServiceTest {
                 .phoneNumber("+1 (380) 223 98 83")
                 .dateOfBirth(LocalDate.parse("2004-09-01"))
                 .address("Test Street 23/3")
+                .patientStatus(PatientStatus.ACTIVE)
                 .registeredDate(LocalDate.now())
                 .build();
 
@@ -66,6 +68,7 @@ public class PatientServiceTest {
                 .phoneNumber("+1 (380) 223 98 83")
                 .dateOfBirth(LocalDate.parse("2009-09-03"))
                 .address("Test Block 23/3")
+                .patientStatus(PatientStatus.ACTIVE)
                 .registeredDate(LocalDate.now())
                 .build();
 
@@ -84,6 +87,7 @@ public class PatientServiceTest {
         assertThat(response.get(0).getPhoneNumber()).isEqualTo(firstPatient.getPhoneNumber());
         assertThat(response.get(0).getDateOfBirth()).isEqualTo(firstPatient.getDateOfBirth().toString());
         assertThat(response.get(0).getAddress()).isEqualTo(firstPatient.getAddress());
+        assertThat(response.get(0).getStatus()).isEqualTo(firstPatient.getPatientStatus().toString());
 
         assertThat(response.get(1).getId()).isEqualTo(secondPatient.getPatientId().toString());
         assertThat(response.get(1).getFirstName()).isEqualTo(secondPatient.getFirstName());
@@ -95,6 +99,7 @@ public class PatientServiceTest {
         assertThat(response.get(1).getPhoneNumber()).isEqualTo(secondPatient.getPhoneNumber());
         assertThat(response.get(1).getDateOfBirth()).isEqualTo(secondPatient.getDateOfBirth().toString());
         assertThat(response.get(1).getAddress()).isEqualTo(secondPatient.getAddress());
+        assertThat(response.get(1).getStatus()).isEqualTo(secondPatient.getPatientStatus().toString());
 
         verify(patientRepository).findAll();
         verifyNoMoreInteractions(patientRepository);
@@ -127,6 +132,7 @@ public class PatientServiceTest {
                 .phoneNumber("+1 (380) 223 98 83")
                 .dateOfBirth(LocalDate.parse("2009-09-03"))
                 .address("Test Block 23/3")
+                .patientStatus(PatientStatus.ACTIVE)
                 .registeredDate(LocalDate.parse("2020-01-01"))
                 .build();
 
@@ -144,6 +150,7 @@ public class PatientServiceTest {
         assertThat(response.getPhoneNumber()).isEqualTo(patient.getPhoneNumber());
         assertThat(response.getDateOfBirth()).isEqualTo(patient.getDateOfBirth().toString());
         assertThat(response.getAddress()).isEqualTo(patient.getAddress());
+        assertThat(response.getStatus()).isEqualTo(patient.getPatientStatus().toString());
 
         verify(patientRepository).findById(patientId);
         verifyNoMoreInteractions(patientRepository);
@@ -190,6 +197,7 @@ public class PatientServiceTest {
                 .dateOfBirth(request.getDateOfBirth())
                 .address(request.getAddress())
                 .registeredDate(request.getRegisteredDate())
+                .patientStatus(PatientStatus.ACTIVE)
                 .build();
 
         when(patientRepository.existsByEmail(request.getEmail())).thenReturn(false);
@@ -206,6 +214,7 @@ public class PatientServiceTest {
         assertThat(response.getPhoneNumber()).isEqualTo(patient.getPhoneNumber());
         assertThat(response.getDateOfBirth()).isEqualTo(patient.getDateOfBirth().toString());
         assertThat(response.getAddress()).isEqualTo(patient.getAddress());
+        assertThat(response.getStatus()).isEqualTo(patient.getPatientStatus().toString());
 
         verify(patientRepository).existsByEmail(request.getEmail());
         verify(patientRepository).save(Mockito.any(Patient.class));
@@ -267,6 +276,7 @@ public class PatientServiceTest {
                 .phoneNumber(request.getPhoneNumber())
                 .dateOfBirth(request.getDateOfBirth())
                 .address(request.getAddress())
+                .patientStatus(PatientStatus.ACTIVE)
                 .registeredDate(request.getRegisteredDate())
                 .build();
 
@@ -283,6 +293,7 @@ public class PatientServiceTest {
         assertThat(response.getPhoneNumber()).isEqualTo(patient.getPhoneNumber());
         assertThat(response.getDateOfBirth()).isEqualTo(patient.getDateOfBirth().toString());
         assertThat(response.getAddress()).isEqualTo(patient.getAddress());
+        assertThat(response.getStatus()).isEqualTo(patient.getPatientStatus().toString());
 
         verify(patientRepository).findById(patientId);
         verify(patientRepository).save(Mockito.any(Patient.class));

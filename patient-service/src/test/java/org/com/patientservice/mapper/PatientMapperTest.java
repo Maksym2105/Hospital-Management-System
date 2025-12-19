@@ -1,5 +1,6 @@
 package org.com.patientservice.mapper;
 
+import org.com.patientservice.additional.PatientStatus;
 import org.com.patientservice.dto.PatientRequestDTO;
 import org.com.patientservice.dto.PatientResponseDTO;
 import org.com.patientservice.exception.EmptyComponentException;
@@ -31,6 +32,7 @@ public class PatientMapperTest {
                 .phoneNumber("+1 (234) 567890")
                 .dateOfBirth(LocalDate.parse("2001-03-09"))
                 .address("Test Address")
+                .patientStatus(PatientStatus.ACTIVE)
                 .registeredDate(LocalDate.now())
                 .build();
 
@@ -45,6 +47,7 @@ public class PatientMapperTest {
         assertThat(response.getPhoneNumber()).isEqualTo(patient.getPhoneNumber());
         assertThat(response.getDateOfBirth()).isEqualTo(patient.getDateOfBirth().toString());
         assertThat(response.getAddress()).isEqualTo(patient.getAddress());
+        assertThat(response.getStatus()).isEqualTo(patient.getPatientStatus().toString());
     }
 
     @Test
@@ -67,6 +70,7 @@ public class PatientMapperTest {
                 .phoneNumber("+1 (234) 567890")
                 .dateOfBirth(LocalDate.parse("2001-03-09"))
                 .address("Test Address")
+                .patientStatus(PatientStatus.ACTIVE)
                 .registeredDate(LocalDate.now())
                 .build();
 
