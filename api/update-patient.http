@@ -1,5 +1,5 @@
 ###
-PUT localhost:1010/api/7f89b453-ce96-42a3-ae64-d17d62b83b71
+PUT localhost:1010/patient/7f89b453-ce96-42a3-ae64-d17d62b83b71
 Content-Type: application/json
 
 {
@@ -7,7 +7,7 @@ Content-Type: application/json
   "lastName": "B",
   "gender": "MALE",
   "weight": 120.4,
-  "email": "dark-knight@example.com",
+  "email": "dark-knight1@example.com",
   "phoneNumber": "+1111111111",
   "dateOfBirth": "1992-03-09",
   "address": "Belgorod"

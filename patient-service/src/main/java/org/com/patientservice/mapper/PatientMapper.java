@@ -30,6 +30,7 @@ public class PatientMapper {
                 .email(patient.getEmail())
                 .phoneNumber(patient.getPhoneNumber())
                 .dateOfBirth(patient.getDateOfBirth().toString())
+                .status(patient.getPatientStatus().toString())
                 .address(patient.getAddress())
                 .build();
 
