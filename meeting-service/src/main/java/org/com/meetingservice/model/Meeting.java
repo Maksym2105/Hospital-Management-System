@@ -54,12 +54,6 @@ public class Meeting {
     @Field(name = "notes")
     private String notes;
 
-    @Field(name = "meeting_link")
-    private String meetingLink;
-
-    @Field(name = "location")
-    private String location;
-
     @CreatedDate
     @Field(name = "created_at")
     private LocalDateTime createdAt;
