@@ -28,7 +28,24 @@ public class GlobalExceptionHandler {
         Map<String, String> errors = new HashMap<>();
 
         log.warn("Service unavailable, {}", ex.getMessage());
+        errors.put("message", ex.getMessage());
+        return ResponseEntity.badRequest().body(errors);
+    }
 
+    @ExceptionHandler(ScheduleNotAvailableException.class)
+    public ResponseEntity<Map<String, String>> handleScheduleNotAvailableException(ScheduleNotAvailableException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        log.warn("Schedule not available, {}", ex.getMessage());
+        errors.put("message", ex.getMessage());
+        return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(MeetingNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleMeetingNotFoundException(MeetingNotFoundException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        log.warn("Meeting not found, {}", ex.getMessage());
         errors.put("message", ex.getMessage());
         return ResponseEntity.badRequest().body(errors);
     }

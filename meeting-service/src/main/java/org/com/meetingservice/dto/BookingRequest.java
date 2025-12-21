@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Data
 public class BookingRequest {
 
@@ -20,14 +23,18 @@ public class BookingRequest {
     @NotBlank
     @FutureOrPresent
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private String meetingDate;
+    private LocalDate meetingDate;
+
+    @NotBlank
+    @FutureOrPresent
+    @JsonFormat(pattern = "HH-mm-ss")
+    private LocalTime meetingStartTime;
+
+    @NotBlank
+    @FutureOrPresent
+    @JsonFormat(pattern = "HH-mm-ss")
+    private LocalTime meetingEndTime;
 
     @Size(max = 256)
     private String notes;
-
-    @Size(max = 256)
-    private String meetingLink;
-
-    @Size(max = 256)
-    private String location;
 }
