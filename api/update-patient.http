@@ -7,7 +7,7 @@ Content-Type: application/json
   "lastName": "B",
   "gender": "MALE",
   "weight": 120.4,
-  "email": "dark-knight1@example.com",
+  "email": "dark-knight2@example.com",
   "phoneNumber": "+1111111111",
   "dateOfBirth": "1992-03-09",
   "address": "Belgorod"

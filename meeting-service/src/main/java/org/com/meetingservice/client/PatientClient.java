@@ -15,7 +15,4 @@ public interface PatientClient {
 
     @GetMapping("/api/{id}")
     ResponseEntity<PatientResponseDTO> getPatientById(@PathVariable String id);
-
-    @GetMapping("/api/patients")
-    ResponseEntity<List<PatientResponseDTO>> getPatients();
 }

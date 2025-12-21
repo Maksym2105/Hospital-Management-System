@@ -19,10 +19,4 @@ public class PatientClientFallback implements PatientClient {
         log.error("Patient service unavailable - getPatientById failed for id: {}", id);
         throw new ServiceUnavailableException(MeetingServiceMessages.SERVICE_UNAVAILABLE.getMessage());
     }
-
-    @Override
-    public ResponseEntity<List<PatientResponseDTO>> getPatients() {
-        log.error("Patient service unavailable - getPatients failed");
-        throw new ServiceUnavailableException(MeetingServiceMessages.SERVICE_UNAVAILABLE.getMessage());
-    }
 }
