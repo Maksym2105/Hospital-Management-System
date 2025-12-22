@@ -2,6 +2,8 @@ package org.com.meetingservice.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class DoctorResponseDTO {
 
@@ -14,4 +16,5 @@ public class DoctorResponseDTO {
     private String specialization;
     private String rating;
     private String doctorStatus;
+    private List<ScheduleResponseDTO> schedules;
 }

@@ -6,35 +6,34 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.Instant;
 
 @Data
 public class BookingRequest {
 
-    @NotBlank
-    @Size(min =1, max = 36)
+    @NotBlank(message = "Patient id required")
+    @Size(min =1, max = 36, message = "Patient id must be under 36 digits")
     private String patientId;
 
-    @NotBlank
-    @Size(min =1, max = 36)
+    @NotBlank(message = "Doctor id required")
+    @Size(min =1, max = 36, message = "Doctor id must be under 36 digits")
     private String doctorId;
 
-    @NotBlank
-    @FutureOrPresent
+    @NotBlank(message = "Date is required")
+    @FutureOrPresent(message = "Date cannot be in past")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate meetingDate;
+    private Instant meetingDate;
 
-    @NotBlank
-    @FutureOrPresent
+    @NotBlank(message = "Start time is required")
+    @FutureOrPresent(message = "Start time cannot be in past")
     @JsonFormat(pattern = "HH-mm-ss")
-    private LocalTime meetingStartTime;
+    private Instant meetingStartTime;
 
-    @NotBlank
-    @FutureOrPresent
+    @NotBlank(message = "End time is required")
+    @FutureOrPresent(message = "End time cannot be in past")
     @JsonFormat(pattern = "HH-mm-ss")
-    private LocalTime meetingEndTime;
+    private Instant meetingEndTime;
 
-    @Size(max = 256)
+    @Size(max = 256, message = "Notes must be under 256 digits")
     private String notes;
 }

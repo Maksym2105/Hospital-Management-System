@@ -12,6 +12,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -37,28 +38,28 @@ public class Meeting {
 
     @Field(name = "date")
     @NotNull
-    private LocalDate meetingDate;
+    private Instant date;
 
     @Field(name = "start_time")
     @NotNull
-    private LocalTime meetingStartTime;
+    private Instant startTime;
 
     @Field(name = "end_time")
     @NotNull
-    private LocalTime meetingEndTime;
+    private Instant endTime;
 
     @Field(name = "status")
     @NotNull
-    private MeetingStatus meetingStatus;
+    private MeetingStatus status;
 
     @Field(name = "notes")
     private String notes;
 
     @CreatedDate
     @Field(name = "created_at")
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @LastModifiedDate
     @Field(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private Instant updatedAt;
 }
