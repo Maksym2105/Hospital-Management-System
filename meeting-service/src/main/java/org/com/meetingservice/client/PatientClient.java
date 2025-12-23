@@ -13,6 +13,6 @@ import java.util.List;
 )
 public interface PatientClient {
 
-    @GetMapping("/api/{id}")
-    ResponseEntity<PatientResponseDTO> getPatientById(@PathVariable String id);
+    @GetMapping("/patient/{id}")
+    PatientResponseDTO getPatientById(@PathVariable String id);
 }

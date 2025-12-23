@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class DoctorClientFallback implements DoctorClient {
 
     @Override
-    public ResponseEntity<DoctorResponseDTO> getDoctorById(String id) {
+    public DoctorResponseDTO getDoctorById(String id) {
         log.error("Doctor service unavailable - getDoctorById failed for id: {}", id);
         throw new ServiceUnavailableException(MeetingServiceMessages.SERVICE_UNAVAILABLE.getMessage());
     }
