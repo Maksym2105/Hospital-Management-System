@@ -49,4 +49,40 @@ public class GlobalExceptionHandler {
         errors.put("message", ex.getMessage());
         return ResponseEntity.badRequest().body(errors);
     }
+
+    @ExceptionHandler(InvalidStatusException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidStatusException(InvalidStatusException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        log.warn("Invalid status, {}", ex.getMessage());
+        errors.put("message", ex.getMessage());
+        return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(ScheduleNotMatchingException.class)
+    public ResponseEntity<Map<String, String>> handleScheduleNotMatchingException(ScheduleNotMatchingException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        log.warn("Schedule not matching, {}", ex.getMessage());
+        errors.put("message", ex.getMessage());
+        return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(InvalidMeetingException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidMeetingException(InvalidMeetingException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        log.warn("Invalid meeting, {}", ex.getMessage());
+        errors.put("message", ex.getMessage());
+        return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(MeetingConflictException.class)
+    public ResponseEntity<Map<String, String>> handleMeetingConflictException(MeetingConflictException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        log.warn("Meeting conflict, {}", ex.getMessage());
+        errors.put("message", ex.getMessage());
+        return ResponseEntity.badRequest().body(errors);
+    }
 }
