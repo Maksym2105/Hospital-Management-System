@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -14,11 +15,11 @@ import java.util.UUID;
 @Repository
 public interface MeetingRepository extends MongoRepository<Meeting, UUID> {
 
-    Page<Meeting> findByPatientId(UUID patientId);
-    Page<Meeting> findDoctorId(UUID doctorId);
-    Page<Meeting> findByMeetingStatus(MeetingStatus meetingStatus);
-    List<Meeting> findByDoctorIdAndMeetingStatusAndMeetingStartTimeBetween(
-            UUID doctorId,MeetingStatus meetingStatus, LocalTime meetingStartTime, LocalTime meetingEndTime);
-    List<Meeting> findByPatientIdAndMeetingStatusAndMeetingStartTimeBetween(
-            UUID patientId, MeetingStatus meetingStatus, LocalTime meetingStartTime, LocalTime meetingEndTime);
+    List<Meeting> findByPatientId(UUID patientId);
+    List<Meeting> findByDoctorId(UUID doctorId);
+    List<Meeting> findByStatus(MeetingStatus meetingStatus);
+    List<Meeting> findByDoctorIdAndStatusAndStartTimeBetween(
+            UUID doctorId, MeetingStatus meetingStatus, Instant meetingStartTime, Instant meetingEndTime);
+    List<Meeting> findByPatientIdAndStatusAndStartTimeBetween(
+            UUID patientId, MeetingStatus meetingStatus, Instant meetingStartTime, Instant meetingEndTime);
 }
