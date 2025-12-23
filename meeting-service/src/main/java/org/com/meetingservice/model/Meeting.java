@@ -36,6 +36,16 @@ public class Meeting {
     @NotNull
     private UUID patientId;
 
+    private String patientFirstName;
+
+    private String patientLastName;
+
+    private String doctorFirstName;
+
+    private String doctorLastName;
+
+    private String doctorSpecialization;
+
     @Field(name = "date")
     @NotNull
     private Instant date;

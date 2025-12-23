@@ -15,4 +15,5 @@ public class PatientResponseDTO {
     private String phoneNumber;
     private String dateOfBirth;
     private String address;
+    private String status;
 }
