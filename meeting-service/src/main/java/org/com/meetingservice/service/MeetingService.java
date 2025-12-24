@@ -4,13 +4,17 @@ import lombok.RequiredArgsConstructor;
 import org.com.meetingservice.additional.MeetingStatus;
 import org.com.meetingservice.client.DoctorClient;
 import org.com.meetingservice.client.PatientClient;
-import org.com.meetingservice.dto.BookingRequest;
+import org.com.meetingservice.exception.MeetingConflictException;
+import org.com.meetingservice.exception.MeetingNotFoundException;
+import org.com.meetingservice.messages.MeetingServiceMessages;
+import org.com.meetingservice.requests.BookingRequest;
 import org.com.meetingservice.dto.DoctorResponseDTO;
 import org.com.meetingservice.dto.MeetingResponse;
 import org.com.meetingservice.dto.PatientResponseDTO;
 import org.com.meetingservice.mapper.MeetingMapper;
 import org.com.meetingservice.model.Meeting;
 import org.com.meetingservice.repository.MeetingRepository;
+import org.com.meetingservice.requests.UpdateRequest;
 import org.com.meetingservice.validation.DoctorValidation;
 import org.com.meetingservice.validation.PatientValidation;
 import org.springframework.stereotype.Service;
@@ -60,11 +64,49 @@ public class MeetingService {
         return mapList(meetingRepository.findByStatus(meetingStatus));
     }
 
+    public MeetingResponse updateMeeting(UUID meetingId, UpdateRequest updateRequest) {
+        Meeting meeting = meetingRepository.findById(meetingId).orElseThrow(
+                () -> new MeetingNotFoundException(MeetingServiceMessages.MEETING_NOT_FOUND.getMessage()));
+
+        if(updateRequest.getStatus() == MeetingStatus.CANCELLED) {
+            throw new MeetingConflictException(MeetingServiceMessages.MEETING_CONFLICT.getMessage());
+        }
+
+        DoctorResponseDTO doctorResponse = doctorClient.getDoctorById(meeting.getDoctorId().toString());
+
+        DoctorValidation.checkDoctorAvailability(
+                doctorResponse.toString(), updateRequest.getStartTime(), updateRequest.getEndTime());
+
+        meeting.setStartTime(updateRequest.getStartTime());
+        meeting.setEndTime(updateRequest.getEndTime());
+
+        if(meeting.getStatus() != null){
+            meeting.setStatus(meeting.getStatus());
+        }
+
+        Meeting updated  = meetingRepository.save(meeting);
+
+        return MeetingMapper.toResponse(updated);
+    }
+
+    public void cancelMeeting(UUID meetingId) {
+        Meeting meeting = meetingRepository.findById(meetingId).orElseThrow(
+                () -> new MeetingNotFoundException(MeetingServiceMessages.MEETING_NOT_FOUND.getMessage())
+        );
+
+        if(meeting.getStatus() ==  MeetingStatus.CANCELLED) {
+            throw new MeetingConflictException(MeetingServiceMessages.MEETING_CONFLICT.getMessage());
+        }
+
+        meeting.setStatus(MeetingStatus.CANCELLED);
+
+        meetingRepository.save(meeting);
+    }
+
     private List<MeetingResponse> mapList(List<Meeting> meetings) {
         return meetings.stream()
                 .map(MeetingMapper::toResponse)
                 .toList();
     }
-
 
 }
