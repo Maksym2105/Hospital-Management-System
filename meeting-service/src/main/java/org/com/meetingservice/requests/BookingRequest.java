@@ -1,4 +1,4 @@
-package org.com.meetingservice.dto;
+package org.com.meetingservice.requests;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.FutureOrPresent;

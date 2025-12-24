@@ -2,7 +2,7 @@ package org.com.meetingservice.mapper;
 
 import lombok.experimental.UtilityClass;
 import org.com.meetingservice.additional.MeetingStatus;
-import org.com.meetingservice.dto.BookingRequest;
+import org.com.meetingservice.requests.BookingRequest;
 import org.com.meetingservice.dto.DoctorResponseDTO;
 import org.com.meetingservice.dto.MeetingResponse;
 import org.com.meetingservice.dto.PatientResponseDTO;
