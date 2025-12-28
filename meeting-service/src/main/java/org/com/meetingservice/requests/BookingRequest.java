@@ -21,17 +21,17 @@ public class BookingRequest {
 
     @NotBlank(message = "Date is required")
     @FutureOrPresent(message = "Date cannot be in past")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "UTC")
     private Instant meetingDate;
 
     @NotBlank(message = "Start time is required")
     @FutureOrPresent(message = "Start time cannot be in past")
-    @JsonFormat(pattern = "HH-mm-ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "UTC")
     private Instant meetingStartTime;
 
     @NotBlank(message = "End time is required")
     @FutureOrPresent(message = "End time cannot be in past")
-    @JsonFormat(pattern = "HH-mm-ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "UTC")
     private Instant meetingEndTime;
 
     @Size(max = 256, message = "Notes must be under 256 digits")

@@ -42,20 +42,20 @@ public class MeetingController {
     }
 
     @PostMapping
-    public ResponseEntity<MeetingResponse> createMeeting(@Valid @RequestParam BookingRequest bookingRequest) {
+    public ResponseEntity<MeetingResponse> createMeeting(@Valid @RequestBody BookingRequest bookingRequest) {
         MeetingResponse meetingResponse = meetingService.createMeeting(bookingRequest);
 
         return ResponseEntity.ok().body(meetingResponse);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity <MeetingResponse> updateMeeting(@PathVariable UUID id, @Valid @RequestParam UpdateRequest updateRequest) {
+    public ResponseEntity <MeetingResponse> updateMeeting(@PathVariable UUID id, @Valid @RequestBody UpdateRequest updateRequest) {
         MeetingResponse meetingResponse = meetingService.updateMeeting(id, updateRequest);
 
         return ResponseEntity.ok().body(meetingResponse);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Void> cancelMeeting(@PathVariable UUID id) {
         meetingService.cancelMeeting(id);
 
