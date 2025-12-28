@@ -3,13 +3,14 @@ spring:
     name: meeting-service
 
 eureka:
-  client:
+ instance:
+    hostname: meeting-service
+    prefer-ip-address: true
+ client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://meeting-service:1012/eureka/
     fetch-registry: true
     register-with-eureka: true
-  instance:
-    prefer-ip-address: true
 
 feign:
   client:
