@@ -26,7 +26,7 @@ import java.util.UUID;
 public class Meeting {
 
     @Id
-    private UUID id;
+    private String id;
 
     @Field(name = "doctor_id")
     @NotNull
@@ -36,14 +36,19 @@ public class Meeting {
     @NotNull
     private UUID patientId;
 
+    @Field(name = "patient_first_name")
     private String patientFirstName;
 
+    @Field(name = "patient_last_name")
     private String patientLastName;
 
+    @Field(name = "doctor_first_name")
     private String doctorFirstName;
 
+    @Field(name = "doctor_last_name")
     private String doctorLastName;
 
+    @Field(name = "doctor_specialization")
     private String doctorSpecialization;
 
     @Field(name = "date")
