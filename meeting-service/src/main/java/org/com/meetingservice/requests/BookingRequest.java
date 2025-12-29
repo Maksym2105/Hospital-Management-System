@@ -3,6 +3,7 @@ package org.com.meetingservice.requests;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -19,17 +20,17 @@ public class BookingRequest {
     @Size(min =1, max = 36, message = "Doctor id must be under 36 digits")
     private String doctorId;
 
-    @NotBlank(message = "Date is required")
+    @NotNull(message = "Date is required")
     @FutureOrPresent(message = "Date cannot be in past")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "UTC")
     private Instant meetingDate;
 
-    @NotBlank(message = "Start time is required")
+    @NotNull(message = "Start time is required")
     @FutureOrPresent(message = "Start time cannot be in past")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "UTC")
     private Instant meetingStartTime;
 
-    @NotBlank(message = "End time is required")
+    @NotNull(message = "End time is required")
     @FutureOrPresent(message = "End time cannot be in past")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "UTC")
     private Instant meetingEndTime;

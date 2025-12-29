@@ -38,10 +38,10 @@ public class MeetingService {
 
         DoctorValidation.checkDoctorStatus(doctor);
 
-        DoctorValidation.checkDoctorSchedule(doctor, bookingRequest.getMeetingStartTime(), bookingRequest.getMeetingEndTime());
+//        DoctorValidation.checkDoctorSchedule(doctor, bookingRequest.getMeetingStartTime(), bookingRequest.getMeetingEndTime());
 
-        DoctorValidation.checkDoctorAvailability(
-                bookingRequest.getDoctorId(), bookingRequest.getMeetingStartTime(), bookingRequest.getMeetingEndTime());
+//        DoctorValidation.checkDoctorAvailability(
+//                bookingRequest.getDoctorId(), bookingRequest.getMeetingStartTime(), bookingRequest.getMeetingEndTime());
         PatientValidation.checkPatientAvailability(
                 bookingRequest.getPatientId(), bookingRequest.getMeetingStartTime(), bookingRequest.getMeetingEndTime()
         );
