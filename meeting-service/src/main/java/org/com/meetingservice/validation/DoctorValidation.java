@@ -57,11 +57,11 @@ public class DoctorValidation {
             throw new ScheduleNotAvailableException(MeetingServiceMessages.SCHEDULE_NOT_AVAILABLE.getMessage());
         }
 
-        if(matchingSchedule.getBreakStartTime() != null ||  matchingSchedule.getBreakEndTime() != null) {
+        if(matchingSchedule.getBreakStartTime() != null && matchingSchedule.getBreakEndTime() != null) {
             LocalTime breakStartTime = LocalTime.parse(matchingSchedule.getBreakStartTime());
             LocalTime breakEndTime = LocalTime.parse(matchingSchedule.getBreakEndTime());
 
-            if(timeOverlap(matchingStartTime, matchingEndTime, breakStartTime, breakEndTime)) {
+            if(timeOverlapForLocalTime(matchingStartTime, matchingEndTime, breakStartTime, breakEndTime)) {
                 throw new InvalidMeetingException(MeetingServiceMessages.INVALID_MEETING_EXCEPTION.getMessage());
             }
         }
@@ -86,13 +86,13 @@ public class DoctorValidation {
         return false;
     }
 
-    public static void checkDoctorAvailability(String doctorId, Instant start, Instant end) {
+    public static void checkDoctorAvailability(UUID doctorId, Instant start, Instant end) {
         List<Meeting> conflicts = meetingRepository.findByDoctorIdAndStatusAndStartTimeBetween(
-                UUID.fromString(doctorId), MeetingStatus.CONFIRMED, start.minus(Duration.ofHours(4)), end.plus(Duration.ofHours(4))
+                doctorId, MeetingStatus.CONFIRMED, start.minus(Duration.ofHours(4)), end.plus(Duration.ofHours(4))
         );
 
         boolean conflictFound = conflicts.stream()
-                .anyMatch(d -> timeOverlap(start, end, d.getStartTime(), d.getEndTime()));
+                .anyMatch(d -> timeOverlapForInstant(start, end, d.getStartTime(), d.getEndTime()));
 
         if(conflictFound) {
             throw new MeetingConflictException(MeetingServiceMessages.MEETING_CONFLICT.getMessage());
@@ -100,11 +100,11 @@ public class DoctorValidation {
 
     }
 
-    private static boolean timeOverlap(LocalTime start1, LocalTime end1, LocalTime start2, LocalTime end2) {
+    private static boolean timeOverlapForLocalTime(LocalTime start1, LocalTime end1, LocalTime start2, LocalTime end2) {
         return start1.isBefore(end2) && start2.isBefore(end1);
     }
 
-    private static boolean timeOverlap(Instant start1, Instant end1, Instant start2, Instant end2) {
+    private static boolean timeOverlapForInstant(Instant start1, Instant end1, Instant start2, Instant end2) {
         return start1.isBefore(end2) && start2.isBefore(end1);
     }
 }

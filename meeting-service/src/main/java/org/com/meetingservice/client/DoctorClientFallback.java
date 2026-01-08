@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.com.meetingservice.dto.DoctorResponseDTO;
 import org.com.meetingservice.exception.ServiceUnavailableException;
 import org.com.meetingservice.messages.MeetingServiceMessages;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
