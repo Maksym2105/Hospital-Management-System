@@ -49,14 +49,14 @@ public class MeetingController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity <MeetingResponse> updateMeeting(@PathVariable UUID id, @Valid @RequestBody UpdateRequest updateRequest) {
+    public ResponseEntity<MeetingResponse> updateMeeting(@PathVariable String id, @Valid @RequestBody UpdateRequest updateRequest) {
         MeetingResponse meetingResponse = meetingService.updateMeeting(id, updateRequest);
 
         return ResponseEntity.ok().body(meetingResponse);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> cancelMeeting(@PathVariable UUID id) {
+    public ResponseEntity<Void> cancelMeeting(@PathVariable String id) {
         meetingService.cancelMeeting(id);
 
         return ResponseEntity.noContent().build();

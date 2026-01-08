@@ -43,7 +43,7 @@ public class MeetingMapper {
 
     public static MeetingResponse toResponse(Meeting meeting) {
         MeetingResponse response = MeetingResponse.builder()
-                .id(meeting.getId().toString())
+                .id(meeting.getId())
                 .meetingDate(meeting.getDate().toString())
                 .startTime(meeting.getStartTime().toString())
                 .endTime(meeting.getEndTime().toString())

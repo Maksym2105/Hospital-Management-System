@@ -38,15 +38,15 @@ public class MeetingService {
 
         DoctorValidation.checkDoctorStatus(doctor);
 
-//        DoctorValidation.checkDoctorSchedule(doctor, bookingRequest.getMeetingStartTime(), bookingRequest.getMeetingEndTime());
+        DoctorValidation.checkDoctorSchedule(doctor, bookingRequest.getMeetingStartTime(), bookingRequest.getMeetingEndTime());
 
-//        DoctorValidation.checkDoctorAvailability(
-//                bookingRequest.getDoctorId(), bookingRequest.getMeetingStartTime(), bookingRequest.getMeetingEndTime());
+        DoctorValidation.checkDoctorAvailability(
+                UUID.fromString(bookingRequest.getDoctorId()), bookingRequest.getMeetingStartTime(), bookingRequest.getMeetingEndTime());
         PatientValidation.checkPatientAvailability(
                 bookingRequest.getPatientId(), bookingRequest.getMeetingStartTime(), bookingRequest.getMeetingEndTime()
         );
 
-        Meeting meeting = MeetingMapper.toEntity(bookingRequest,  doctor, patient);
+        Meeting meeting = MeetingMapper.toEntity(bookingRequest, doctor, patient);
         Meeting saved  = meetingRepository.save(meeting);
 
         return  MeetingMapper.toResponse(saved);
@@ -64,7 +64,7 @@ public class MeetingService {
         return mapList(meetingRepository.findByStatus(meetingStatus));
     }
 
-    public MeetingResponse updateMeeting(UUID meetingId, UpdateRequest updateRequest) {
+    public MeetingResponse updateMeeting(String meetingId, UpdateRequest updateRequest) {
         Meeting meeting = meetingRepository.findById(meetingId).orElseThrow(
                 () -> new MeetingNotFoundException(MeetingServiceMessages.MEETING_NOT_FOUND.getMessage()));
 
@@ -75,8 +75,9 @@ public class MeetingService {
         DoctorResponseDTO doctorResponse = doctorClient.getDoctorById(meeting.getDoctorId().toString());
 
         DoctorValidation.checkDoctorAvailability(
-                doctorResponse.toString(), updateRequest.getStartTime(), updateRequest.getEndTime());
+                UUID.fromString(doctorResponse.getId()), updateRequest.getStartTime(), updateRequest.getEndTime());
 
+        meeting.setDate(updateRequest.getDate());
         meeting.setStartTime(updateRequest.getStartTime());
         meeting.setEndTime(updateRequest.getEndTime());
 
@@ -84,12 +85,12 @@ public class MeetingService {
             meeting.setStatus(meeting.getStatus());
         }
 
-        Meeting updated  = meetingRepository.save(meeting);
+        Meeting updated = meetingRepository.save(meeting);
 
         return MeetingMapper.toResponse(updated);
     }
 
-    public void cancelMeeting(UUID meetingId) {
+    public void cancelMeeting(String meetingId) {
         Meeting meeting = meetingRepository.findById(meetingId).orElseThrow(
                 () -> new MeetingNotFoundException(MeetingServiceMessages.MEETING_NOT_FOUND.getMessage())
         );

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface MeetingRepository extends MongoRepository<Meeting, UUID> {
+public interface MeetingRepository extends MongoRepository<Meeting, String> {
 
     List<Meeting> findByPatientId(UUID patientId);
     List<Meeting> findByDoctorId(UUID doctorId);
