@@ -59,6 +59,6 @@ public class Doctor {
     @Column(name = "doctor_status")
     private DoctorStatus doctorStatus;
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Schedule> schedules;
 }

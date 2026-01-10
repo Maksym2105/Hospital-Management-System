@@ -4,10 +4,10 @@ Content-Type: application/json
 
 {
   "patientId": "09000e05-6a37-4b69-b516-381621575e4a",
-  "doctorId": "f8428687-779d-432e-908b-8926a267081a",
-  "meetingDate" : "2026-02-03T00:00:00Z",
-  "meetingStartTime" : "2026-02-03T15:00:00Z",
-  "meetingEndTime" : "2026-02-03T15:30:00Z",
+  "doctorId": "bffe3ab9-973c-4d04-9363-5f754ad228d6",
+  "meetingDate" : "2026-02-01T00:00:00Z",
+  "meetingStartTime" : "2026-02-01T09:00:00Z",
+  "meetingEndTime" : "2026-02-01T10:00:00Z",
   "notes" : "Test"
 }
 
