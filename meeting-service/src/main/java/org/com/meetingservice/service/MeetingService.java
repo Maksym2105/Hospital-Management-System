@@ -36,6 +36,7 @@ public class MeetingService {
         DoctorResponseDTO doctor = doctorClient.getDoctorById(bookingRequest.getDoctorId());
         PatientResponseDTO patient = patientClient.getPatientById(bookingRequest.getPatientId());
 
+        PatientValidation.checkPatientStatus(patient);
         DoctorValidation.checkDoctorStatus(doctor);
 
         DoctorValidation.checkDoctorSchedule(doctor, bookingRequest.getMeetingStartTime(), bookingRequest.getMeetingEndTime());

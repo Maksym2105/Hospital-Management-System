@@ -23,7 +23,7 @@ public class DoctorValidation {
     }
 
     public static void checkDoctorStatus(DoctorResponseDTO doctor) {
-        if(!"ACTIVE".equals(doctor.getDoctorStatus())){
+        if(doctor == null || !doctor.getDoctorStatus().equals("ACTIVE")) {
             throw new InvalidStatusException(MeetingServiceMessages.INVALID_STATUS.getMessage());
         }
     }

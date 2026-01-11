@@ -3,12 +3,12 @@ POST localhost:1012/meeting
 Content-Type: application/json
 
 {
-  "patientId": "1a7430ef-4510-49fb-b1fb-d1d3d65b774b",
-  "doctorId": "657cd99a-9657-4cf8-983a-5447334c4d92",
-  "meetingDate" : "2026-02-02T00:00:00Z",
-  "meetingStartTime" : "2026-02-02T10:00:00Z",
-  "meetingEndTime" : "2026-02-02T10:30:00Z",
-  "notes" : "Stomach Pain"
+  "patientId": "084b400a-0832-4b7a-8016-bbbcc515baeb",
+  "doctorId": "c088b336-b7a1-4aca-a6be-e7d48ab3109f",
+  "meetingDate" : "2026-02-03T00:00:00Z",
+  "meetingStartTime" : "2026-02-03T10:30:00Z",
+  "meetingEndTime" : "2026-02-03T11:00:00Z",
+  "notes" : "Braces installation"
 }
 
 ###

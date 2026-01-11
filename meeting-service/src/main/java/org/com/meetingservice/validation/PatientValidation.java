@@ -1,7 +1,8 @@
 package org.com.meetingservice.validation;
 
-import lombok.RequiredArgsConstructor;
 import org.com.meetingservice.additional.MeetingStatus;
+import org.com.meetingservice.dto.PatientResponseDTO;
+import org.com.meetingservice.exception.InvalidStatusException;
 import org.com.meetingservice.exception.MeetingConflictException;
 import org.com.meetingservice.messages.MeetingServiceMessages;
 import org.com.meetingservice.model.Meeting;
@@ -20,6 +21,12 @@ public class PatientValidation {
 
     public PatientValidation(MeetingRepository meetingRepository) {
         this.meetingRepository = meetingRepository;
+    }
+
+    public static void checkPatientStatus(PatientResponseDTO patient) {
+        if(patient == null || !patient.getStatus().equals("ACTIVE")) {
+            throw new InvalidStatusException(MeetingServiceMessages.INVALID_STATUS.getMessage());
+        }
     }
 
     public static void checkPatientAvailability(String patientId, Instant start, Instant end) {
