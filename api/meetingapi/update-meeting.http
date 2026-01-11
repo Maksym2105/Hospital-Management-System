@@ -1,11 +1,11 @@
 ### GET request to example server
-PUT http://localhost:1012/meeting/695ec7e2d397571ae57c60f9
+PUT http://localhost:1012/meeting/6962cc086137a97da0090275
 Content-Type: application/json
 
 {
-  "date": "2026-02-03T00:00:00Z",
-  "startTime": "2026-02-03T10:00:00Z",
-  "endTime": "2026-02-03T10:30:00Z",
+  "date": "2026-02-05T00:00:00Z",
+  "startTime": "2026-02-05T10:00:00Z",
+  "endTime": "2026-02-05T10:30:00Z",
   "status": "CONFIRMED"
 }
 
