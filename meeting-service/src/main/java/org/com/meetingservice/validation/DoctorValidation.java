@@ -29,7 +29,7 @@ public class DoctorValidation {
     }
 
     public static void checkDoctorSchedule(DoctorResponseDTO doctor, Instant start, Instant end) {
-        if(doctor.getSchedules() == null || doctor.getSchedules().isEmpty()) {
+        if(doctor.getSchedulesList() == null || doctor.getSchedulesList().isEmpty()) {
             throw new ScheduleNotAvailableException(MeetingServiceMessages.SCHEDULE_NOT_AVAILABLE.getMessage());
         }
 
@@ -41,7 +41,7 @@ public class DoctorValidation {
         LocalTime matchingEndTime = endZdt.toLocalTime();
         DayOfWeek matchingDayOfWeek = matchingDate.getDayOfWeek();
 
-        ScheduleResponseDTO matchingSchedule = doctor.getSchedules().stream()
+        ScheduleResponseDTO matchingSchedule = doctor.getSchedulesList().stream()
                 .filter(schedule -> matchesDay(schedule, matchingDayOfWeek, matchingDate))
                 .findFirst()
                 .orElseThrow(() -> new ScheduleNotMatchingException(MeetingServiceMessages.SCHEDULE_NOT_MATCHING.getMessage()));

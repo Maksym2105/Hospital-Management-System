@@ -12,6 +12,6 @@ public class ScheduleResponseDTO {
     private String scheduleDate;
     private String breakStartTime;
     private String breakEndTime;
-    private DayOfWeek dayOfWeek;
+    private String dayOfWeek;
     private String isDayOff;
 }

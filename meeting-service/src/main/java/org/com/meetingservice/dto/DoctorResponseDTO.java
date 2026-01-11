@@ -1,5 +1,6 @@
 package org.com.meetingservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
@@ -16,5 +17,6 @@ public class DoctorResponseDTO {
     private String specialization;
     private String rating;
     private String doctorStatus;
-    private List<ScheduleResponseDTO> schedules;
+    @JsonProperty("scheduleList")
+    private List<ScheduleResponseDTO> schedulesList;
 }
