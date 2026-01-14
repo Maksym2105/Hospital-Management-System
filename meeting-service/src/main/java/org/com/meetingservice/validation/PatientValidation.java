@@ -17,19 +17,19 @@ import java.util.UUID;
 @Component
 public class PatientValidation {
 
-    private static MeetingRepository meetingRepository;
+    private MeetingRepository meetingRepository;
 
     public PatientValidation(MeetingRepository meetingRepository) {
         this.meetingRepository = meetingRepository;
     }
 
-    public static void checkPatientStatus(PatientResponseDTO patient) {
+    public void checkPatientStatus(PatientResponseDTO patient) {
         if(patient == null || !patient.getStatus().equals("ACTIVE")) {
             throw new InvalidStatusException(MeetingServiceMessages.INVALID_STATUS.getMessage());
         }
     }
 
-    public static void checkPatientAvailability(String patientId, Instant start, Instant end) {
+    public void checkPatientAvailability(String patientId, Instant start, Instant end) {
         List<Meeting> conflicts = meetingRepository.findByPatientIdAndStatusAndStartTimeBetween(
                 UUID.fromString(patientId), MeetingStatus.CONFIRMED, start.minus(Duration.ofHours(4)), end.plus(Duration.ofHours(4))
         );
@@ -42,7 +42,7 @@ public class PatientValidation {
         }
     }
 
-    private static boolean timeOverlap(Instant start1, Instant end1, Instant start2, Instant end2) {
+    private boolean timeOverlap(Instant start1, Instant end1, Instant start2, Instant end2) {
         return start1.isBefore(end2) && start2.isBefore(end1);
     }
 }

@@ -16,19 +16,19 @@ import java.util.UUID;
 @Component
 public class DoctorValidation {
 
-    private static MeetingRepository meetingRepository;
+    private MeetingRepository meetingRepository;
 
     public DoctorValidation(MeetingRepository meetingRepository) {
         this.meetingRepository = meetingRepository;
     }
 
-    public static void checkDoctorStatus(DoctorResponseDTO doctor) {
+    public void checkDoctorStatus(DoctorResponseDTO doctor) {
         if(doctor == null || !doctor.getDoctorStatus().equals("ACTIVE")) {
             throw new InvalidStatusException(MeetingServiceMessages.INVALID_STATUS.getMessage());
         }
     }
 
-    public static void checkDoctorSchedule(DoctorResponseDTO doctor, Instant start, Instant end) {
+    public void checkDoctorSchedule(DoctorResponseDTO doctor, Instant start, Instant end) {
         if(doctor.getSchedulesList() == null || doctor.getSchedulesList().isEmpty()) {
             throw new ScheduleNotAvailableException(MeetingServiceMessages.SCHEDULE_NOT_AVAILABLE.getMessage());
         }
@@ -67,7 +67,7 @@ public class DoctorValidation {
         }
     }
 
-    private static boolean matchesDay(ScheduleResponseDTO schedule, DayOfWeek dayOfWeek, LocalDate date) {
+    private boolean matchesDay(ScheduleResponseDTO schedule, DayOfWeek dayOfWeek, LocalDate date) {
         if(schedule != null && !schedule.getScheduleDate().isBlank()){
             try{
                 LocalDate scheduleDate = LocalDate.parse(schedule.getScheduleDate());
@@ -86,7 +86,7 @@ public class DoctorValidation {
         return false;
     }
 
-    public static void checkDoctorAvailability(UUID doctorId, Instant start, Instant end) {
+    public void checkDoctorAvailability(UUID doctorId, Instant start, Instant end) {
         List<Meeting> conflicts = meetingRepository.findByDoctorIdAndStatusAndStartTimeBetween(
                 doctorId, MeetingStatus.CONFIRMED, start.minus(Duration.ofHours(4)), end.plus(Duration.ofHours(4))
         );
@@ -97,14 +97,13 @@ public class DoctorValidation {
         if(conflictFound) {
             throw new MeetingConflictException(MeetingServiceMessages.MEETING_CONFLICT.getMessage());
         }
-
     }
 
-    private static boolean timeOverlapForLocalTime(LocalTime start1, LocalTime end1, LocalTime start2, LocalTime end2) {
+    private boolean timeOverlapForLocalTime(LocalTime start1, LocalTime end1, LocalTime start2, LocalTime end2) {
         return start1.isBefore(end2) && start2.isBefore(end1);
     }
 
-    private static boolean timeOverlapForInstant(Instant start1, Instant end1, Instant start2, Instant end2) {
+    private boolean timeOverlapForInstant(Instant start1, Instant end1, Instant start2, Instant end2) {
         return start1.isBefore(end2) && start2.isBefore(end1);
     }
 }

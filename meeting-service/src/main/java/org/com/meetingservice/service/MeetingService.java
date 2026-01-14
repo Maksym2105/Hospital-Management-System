@@ -29,6 +29,8 @@ public class MeetingService {
     private final DoctorClient doctorClient;
     private final PatientClient patientClient;
     private final MeetingRepository meetingRepository;
+    private final DoctorValidation doctorValidation;
+    private final PatientValidation patientValidation;
 
 
     public MeetingResponse createMeeting(BookingRequest bookingRequest) {
@@ -36,14 +38,14 @@ public class MeetingService {
         DoctorResponseDTO doctor = doctorClient.getDoctorById(bookingRequest.getDoctorId());
         PatientResponseDTO patient = patientClient.getPatientById(bookingRequest.getPatientId());
 
-        PatientValidation.checkPatientStatus(patient);
-        DoctorValidation.checkDoctorStatus(doctor);
+        patientValidation.checkPatientStatus(patient);
+        doctorValidation.checkDoctorStatus(doctor);
 
-        DoctorValidation.checkDoctorSchedule(doctor, bookingRequest.getMeetingStartTime(), bookingRequest.getMeetingEndTime());
+        doctorValidation.checkDoctorSchedule(doctor, bookingRequest.getMeetingStartTime(), bookingRequest.getMeetingEndTime());
 
-        DoctorValidation.checkDoctorAvailability(
+        doctorValidation.checkDoctorAvailability(
                 UUID.fromString(bookingRequest.getDoctorId()), bookingRequest.getMeetingStartTime(), bookingRequest.getMeetingEndTime());
-        PatientValidation.checkPatientAvailability(
+        patientValidation.checkPatientAvailability(
                 bookingRequest.getPatientId(), bookingRequest.getMeetingStartTime(), bookingRequest.getMeetingEndTime()
         );
 
@@ -75,7 +77,7 @@ public class MeetingService {
 
         DoctorResponseDTO doctorResponse = doctorClient.getDoctorById(meeting.getDoctorId().toString());
 
-        DoctorValidation.checkDoctorAvailability(
+        doctorValidation.checkDoctorAvailability(
                 UUID.fromString(doctorResponse.getId()), updateRequest.getStartTime(), updateRequest.getEndTime());
 
         meeting.setDate(updateRequest.getDate());
